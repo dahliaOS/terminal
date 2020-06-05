@@ -16,20 +16,36 @@ class MyWidget extends StatelessWidget {
 }
 
 
-Container buildSettings(IconData icon, String title, Color color, Color splash,
-    String text, BuildContext context) {
+Container buildSettings(IconData icon, String title, Color color) {
   return new Container(
-            padding: const EdgeInsets.all(15),
+                height: 30,
+                margin: EdgeInsets.only(left:15,top:15,),
+                child: Row(children: [
+                  Padding(
+                      padding: EdgeInsets.all(5),
+                      child: Icon(icon,
+                          size: 20, color: color)),
+                  Padding(
+                      padding: EdgeInsets.all(5),
+                      child: Text(title,
+                          style: TextStyle(
+                              fontSize: 15, color: Color(0xff000000))))
+                ]));
+}
+
+Container buildSettingsHeader(String title) {
+  return new Container(
+            padding: const EdgeInsets.only(top:25, left:15,),
             alignment: Alignment.centerLeft,
             child:
-            Text('GENERAL',
+            Text(title,
                         style: TextStyle(
                             fontSize: 15,
                             color: Color(0xff222222),
-                            fontWeight: FontWeight.w600))
-            ,
-          );
+                            fontWeight: FontWeight.w600)));
 }
+
+
 
 final TextEditingController editingController = new TextEditingController();
 
@@ -59,7 +75,9 @@ class Pixel extends StatelessWidget {
 
 
 
- new SingleChildScrollView(
+ new 
+ Expanded(child: 
+ SingleChildScrollView(
                     scrollDirection: Axis.vertical,
                     child: new Column(children: <Widget>[
 Container(
@@ -101,26 +119,59 @@ child:
     ),
 ),
 
-new Container(
-            padding: const EdgeInsets.all(15),
-            alignment: Alignment.centerLeft,
-            child:
-            Text('GENERAL',
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Color(0xff222222),
-                            fontWeight: FontWeight.w600))
-            ,
-          ),
+buildSettingsHeader('WIRELESS & NETWORKS'),
+
+buildSettings(Icons.network_wifi, 'Wifi', Colors.cyan[600]),
+buildSettings(Icons.bluetooth, 'Bluetooth', Colors.blue[600]),
+buildSettings(Icons.sim_card, 'Data', Colors.red[500]),
+buildSettings(Icons.settings_ethernet, 'Wired', Colors.amber[500]),
+
+buildSettingsHeader('DEVICE'),
+
+buildSettings(Icons.brightness_medium, 'Display', Colors.red[600]),
+buildSettings(Icons.keyboard, 'Input', Colors.blue[800]),
+buildSettings(Icons.usb, 'Ports', Colors.orange[500]),
+buildSettings(Icons.volume_up, 'Sound', Colors.teal[500]),
+buildSettings(Icons.storage, 'Storage', Colors.blue[500]),
+buildSettings(Icons.power, 'Power', Colors.amber[500]),
+buildSettings(Icons.devices, 'Devices', Colors.blue[800]),
 
 
+buildSettingsHeader('SYSTEM'),
 
-                    ])),
+buildSettings(Icons.system_update, 'Updates', Colors.deepOrange[500]),
+buildSettings(Icons.palette, 'Appearance', Colors.green[500]),
+buildSettings(Icons.apps, 'Applications', Colors.purple[800]),
+buildSettings(Icons.person, 'Users', Colors.cyan[800]),
+buildSettings(Icons.visibility_off, 'Privacy', Colors.pink[500]),
+buildSettings(Icons.access_time, 'Time', Colors.deepOrange[500]),
+buildSettings(Icons.security, 'Security', Colors.blue[500]),
+buildSettings(Icons.domain, 'Enterprise Enrollment', Colors.deepOrange[500]),
+buildSettings(Icons.developer_board, 'Kernel', Colors.deepOrange[500]),
+buildSettings(Icons.flag, 'Language', Colors.deepOrange[500]),
+
+buildSettingsHeader('DEVELOPER'),
+
+buildSettings(Icons.flag, 'Flags', Colors.deepOrange[500]),
+buildSettings(Icons.developer_mode, 'Bootloader', Colors.green[500]),
+buildSettings(Icons.extension, 'Extensions', Colors.blueGrey[500]),
+buildSettings(Icons.brightness_low, 'Flutter', Colors.lightBlue[500]),
+buildSettings(Icons.attach_money, 'System Shell', Colors.grey[500]),
+buildSettings(Icons.android, 'Android Subsystem', Color(0xFF3DDA84)),
+buildSettings(Icons.note, 'System Logs', Colors.deepOrange),
+
+buildSettingsHeader('ABOUT'),
+
+buildSettings(Icons.brightness_low, 'System', Colors.deepOrange[500]),
+buildSettings(Icons.phone_android, 'Device', Colors.lightBlue[500]),
+buildSettings(Icons.people, 'Credits', Colors.amber[600]),
+
+buildSettingsHeader(' '),
+
+                    ]))),
 
             
           ])))
     ]));
   }
 }
-
-
