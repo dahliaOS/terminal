@@ -17,177 +17,251 @@ limitations under the License.
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(
-    MaterialApp(
-      home: MyWidget(),
-    ),
-  );
+  runApp(new TerminalApp());
 }
+class TerminalApp extends StatelessWidget {
 
-class MyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Pixel();
-  }
-}
-
-
-Container buildSettings(IconData icon, String title, Color color) {
-  return new Container(
-                height: 30,
-                margin: EdgeInsets.only(left:15,top:15,),
-                child: Row(children: [
-                  Padding(
-                      padding: EdgeInsets.all(5),
-                      child: Icon(icon,
-                          size: 20, color: color)),
-                  Padding(
-                      padding: EdgeInsets.all(5),
-                      child: Text(title,
-                          style: TextStyle(
-                              fontSize: 15, color: Color(0xff000000))))
-                ]));
-}
-
-Container buildSettingsHeader(String title) {
-  return new Container(
-            padding: const EdgeInsets.only(top:25, left:15,),
-            alignment: Alignment.centerLeft,
-            child:
-            Text(title,
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Color(0xff222222),
-                            fontWeight: FontWeight.w600)));
-}
-
-
-
-final TextEditingController editingController = new TextEditingController();
-
-class Pixel extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        body: Row(children: [
-      Material(
-          color: Color(0xffffffff),
-          elevation: 10,
-          child: 
-          Container(width: 300, child:
-          Column(children: [
-            Container(
-                height: 50,
-                color: Color(0xffeeeeee),
-                child: Row(children: [
-                  Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Icon(Icons.settings, color: Color(0xffff3D00))),
-                  Text('Settings',
-                      style:
-                          TextStyle(fontSize: 20, color: Color(0xff222222)))
-                ])),
-          
-
-
-
- new 
- Expanded(child: 
- SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: new Column(children: <Widget>[
-Container(
-color: Color(0xffeeeeee),
-child:
- Container(
-        
-      padding: new EdgeInsets.only(left: 10,right: 10,top: 0),
-      margin: new EdgeInsets.only(bottom: 10.0),
-      child: new Material(
-          color: Colors.white,
-        borderRadius: const BorderRadius.all(const Radius.circular(25)),
-        elevation: 5.0,
-        child: new Container(
-            width:700,
-          height: 35.0,
-          margin: new EdgeInsets.only(left: 10,right:5),
-          child: new Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              new Expanded(
-                  child: new TextField(
-                    style: new TextStyle(color: Colors.grey[900],fontSize: 15,),
-                    maxLines: 1,
-                    decoration: new InputDecoration(
-                      hintStyle: TextStyle(color: Colors.grey[900],fontSize: 15,),
-                      icon: Icon(Icons.search, color: const Color(0xFFff3d00),),
-                      hintText: 'Search settings...',
-                      border: InputBorder.none
-                    ),
-                    onSubmitted: null,
-                    controller: editingController,
-                  )
-              )
-            ],
-          ),
-        ),
+    return new MaterialApp(
+      title: 'Generated App',
+      theme: new ThemeData(
+        primarySwatch: Colors.grey,
+        primaryColor: const Color(0xFF2196f3),
+        accentColor: const Color(0xFF2196f3),
+        canvasColor: const Color(0xFFfafafa),
       ),
-    ),
-),
-
-buildSettingsHeader('WIRELESS & NETWORKS'),
-
-buildSettings(Icons.network_wifi, 'Wifi', Colors.cyan[600]),
-buildSettings(Icons.bluetooth, 'Bluetooth', Colors.blue[600]),
-buildSettings(Icons.sim_card, 'Data', Colors.red[500]),
-buildSettings(Icons.settings_ethernet, 'Wired', Colors.amber[500]),
-
-buildSettingsHeader('DEVICE'),
-
-buildSettings(Icons.brightness_medium, 'Display', Colors.red[600]),
-buildSettings(Icons.keyboard, 'Input', Colors.blue[800]),
-buildSettings(Icons.usb, 'Ports', Colors.orange[500]),
-buildSettings(Icons.volume_up, 'Sound', Colors.teal[500]),
-buildSettings(Icons.storage, 'Storage', Colors.blue[500]),
-buildSettings(Icons.power, 'Power', Colors.amber[500]),
-buildSettings(Icons.devices, 'Devices', Colors.blue[800]),
-
-
-buildSettingsHeader('SYSTEM'),
-
-buildSettings(Icons.system_update, 'Updates', Colors.deepOrange[500]),
-buildSettings(Icons.palette, 'Appearance', Colors.green[500]),
-buildSettings(Icons.apps, 'Applications', Colors.purple[800]),
-buildSettings(Icons.person, 'Users', Colors.cyan[800]),
-buildSettings(Icons.visibility_off, 'Privacy', Colors.pink[500]),
-buildSettings(Icons.access_time, 'Time', Colors.deepOrange[500]),
-buildSettings(Icons.security, 'Security', Colors.blue[500]),
-buildSettings(Icons.domain, 'Enterprise Enrollment', Colors.deepOrange[500]),
-buildSettings(Icons.developer_board, 'Kernel', Colors.deepOrange[500]),
-buildSettings(Icons.flag, 'Language', Colors.deepOrange[500]),
-
-buildSettingsHeader('DEVELOPER'),
-
-buildSettings(Icons.flag, 'Flags', Colors.deepOrange[500]),
-buildSettings(Icons.developer_mode, 'Bootloader', Colors.green[500]),
-buildSettings(Icons.extension, 'Extensions', Colors.blueGrey[500]),
-buildSettings(Icons.brightness_low, 'Flutter', Colors.lightBlue[500]),
-buildSettings(Icons.attach_money, 'System Shell', Colors.grey[500]),
-buildSettings(Icons.android, 'Android Subsystem', Color(0xFF3DDA84)),
-buildSettings(Icons.note, 'System Logs', Colors.deepOrange),
-
-buildSettingsHeader('ABOUT'),
-
-buildSettings(Icons.brightness_low, 'System', Colors.deepOrange[500]),
-buildSettings(Icons.phone_android, 'Device', Colors.lightBlue[500]),
-buildSettings(Icons.people, 'Credits', Colors.amber[600]),
-
-buildSettingsHeader(' '),
-
-                    ]))),
-
-            
-          ])))
-    ]));
+      home: new TerminalApp(),
+    );
   }
 }
+
+
+
+     
+
+class Terminal extends StatefulWidget {
+  Terminal({Key key}) : super(key: key);
+  @override
+  _TerminalState createState() => new _TerminalState();
+}
+
+
+
+
+void terminulll() {
+    
+    print('yep, you pressed it! good job');
+  }
+
+
+class _TerminalState extends State<Terminal> {
+
+
+final myController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    myController.dispose();
+    super.dispose();
+  }
+
+
+    @override
+    Widget build(BuildContext context) {
+      return new Scaffold(
+        backgroundColor: const Color(0xFF222222),
+        body:
+          
+        
+        
+       new Column(children: [
+      Container(
+          height: 55,
+          color: Color(0xff292929),
+          child: Row(children: [
+          new IconButton(
+            icon: const Icon(Icons.add),
+            onPressed:terminulll,
+            iconSize: 25.0,
+            color: const Color(0xFFffffff),
+          ),
+            Expanded(
+                child: Center(
+                    child: Text('Terminal',
+                       style: TextStyle(
+                            fontSize: 18, color: Color(0xffffffff))))),
+            
+            new IconButton(
+            icon: const Icon(Icons.play_arrow),
+            onPressed: () {
+            print(myController.text);},
+            iconSize: 25.0,
+            color: const Color(0xFFffffff),
+          ),
+
+            new IconButton(
+            icon: const Icon(Icons.more_vert),
+            onPressed:terminulll,
+            iconSize: 25.0,
+            color: const Color(0xFFffffff),
+          ),
+          ])),
+         new Expanded(child: 
+         
+          new Padding(
+            child:
+new TextFormField(
+  controller: myController,
+ style:    
+         TextStyle(fontSize:15.0,
+            color: const Color(0xFFf2f2f2),
+            
+            fontFamily: "Cousine",),
+          decoration: InputDecoration.collapsed(hintText: ""),
+          autocorrect: false,
+          minLines: null,
+          maxLines: null,
+          expands: true,
+          //initialValue: "debug_shell \$",
+    cursorColor: const Color(0xFFf2f2f2),
+  cursorRadius: Radius.circular(0.0),
+  cursorWidth: 10.0,
+        ),
+padding: const EdgeInsets.fromLTRB(2.0, 2.0, 2.0, 2.0),
+          ),
+         
+         
+         ),
+          
+    ]),        
+        
+        
+
+        
+          );
+      
+    }
+}
+
+
+
+class RootTerminalApp extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return new MaterialApp(
+      title: 'Root Terminal',
+      theme: new ThemeData(
+        primarySwatch: Colors.grey,
+      ),
+      home: new RootTerminal(),
+    );
+  }
+}
+
+
+
+     
+
+class RootTerminal extends StatefulWidget {
+  RootTerminal({Key key}) : super(key: key);
+  @override
+  _RootTerminalState createState() => new _RootTerminalState();
+}
+
+
+
+class _RootTerminalState extends State<RootTerminal> {
+    
+    final rootController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    rootController.dispose();
+    super.dispose();
+  }
+    
+    @override
+    Widget build(BuildContext context) {
+      return new Scaffold(
+        backgroundColor: const Color(0xFF222222),
+        body:
+          
+        
+        
+       new Column(children: [
+      Container(
+          height: 55,
+          color: Colors.red[600],
+          child: Row(children: [
+          new IconButton(
+            icon: const Icon(Icons.add),
+            onPressed:terminulll,
+            iconSize: 25.0,
+            color: const Color(0xFFffffff),
+          ),
+            Expanded(
+                child: Center(
+                    child: Text('Root Terminal',
+                       style: TextStyle(
+                            fontSize: 18, color: Color(0xffffffff))))),
+            
+            new IconButton(
+            icon: const Icon(Icons.play_arrow),
+            onPressed:() {
+            print(rootController.text);},
+            iconSize: 25.0,
+            color: const Color(0xFFffffff),
+          ),
+
+            new IconButton(
+            icon: const Icon(Icons.more_vert),
+            onPressed:terminulll,
+            iconSize: 25.0,
+            color: const Color(0xFFffffff),
+          ),
+          ])),
+         new Expanded(child: 
+         
+          new Padding(
+            child:
+new TextFormField(
+  controller: rootController,
+   onFieldSubmitted: (_) async {
+                  print(rootController.text);
+                },
+ style:    
+         TextStyle(fontSize:15.0,
+            color: const Color(0xFFf2f2f2),
+            
+            fontFamily: "Cousine",),
+          decoration: InputDecoration.collapsed(hintText: ""),
+          autocorrect: false,
+          minLines: null,
+          maxLines: null,
+          expands: true,
+          //initialValue: "debug_shell \#",
+    cursorColor: Colors.red[500],
+  cursorRadius: Radius.circular(0.0),
+  cursorWidth: 10.0,
+        ),
+padding: const EdgeInsets.fromLTRB(2.0, 2.0, 2.0, 2.0),
+          ),
+         
+         
+         ),
+          
+    ]),        
+        
+        
+
+        
+          );
+      
+    }
+}
+
+
