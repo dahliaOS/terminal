@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import 'package:flutter/material.dart';
+import 'dart:io';
 
 void main() {
   runApp(new TerminalApp());
@@ -35,7 +36,11 @@ class TerminalApp extends StatelessWidget {
 }
 
 
-
+String runCommand() {
+ProcessResult result = Process.runSync('bash', ['uname -a']);
+  var verString = result.stdout;
+  return verString;
+  }
      
 
 class Terminal extends StatefulWidget {
@@ -110,29 +115,42 @@ final myController = TextEditingController();
          
           new Padding(
             child:
-new TextFormField(
+            new Container( 
+
+
+    alignment: Alignment.topLeft,
+    child: new Text(
+          runCommand(),
+            style: new TextStyle(fontSize:15.0,
+            color: const Color(0xFFf2f2f2),
+            fontFamily: "Cousine"),
+          ),
+),
+padding: const EdgeInsets.fromLTRB(2.0, 2.0, 2.0, 2.0),
+          ),
+         
+         
+         ),
+         new Padding(child:
+          new TextFormField(
   controller: myController,
  style:    
          TextStyle(fontSize:15.0,
             color: const Color(0xFFf2f2f2),
             
             fontFamily: "Cousine",),
-          decoration: InputDecoration.collapsed(hintText: ""),
+          decoration: InputDecoration.collapsed(hintText: "\$", hintStyle: TextStyle(fontWeight: FontWeight.w900,color: const Color(0xFFf2f2f2)),),
           autocorrect: false,
+          autofocus: true,
           minLines: null,
           maxLines: null,
-          expands: true,
+          
           //initialValue: "debug_shell \$",
     cursorColor: const Color(0xFFf2f2f2),
   cursorRadius: Radius.circular(0.0),
   cursorWidth: 10.0,
         ),
-padding: const EdgeInsets.fromLTRB(2.0, 2.0, 2.0, 2.0),
-          ),
-         
-         
-         ),
-          
+        padding: const EdgeInsets.fromLTRB(2.0, 2.0, 2.0, 2.0),),
     ]),        
         
         

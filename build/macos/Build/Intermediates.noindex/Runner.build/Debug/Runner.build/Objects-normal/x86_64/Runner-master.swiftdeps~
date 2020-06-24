@@ -1,7 +1,7 @@
 version: "Apple Swift version 5.1.2 (swiftlang-1100.0.278 clang-1100.0.33.9)"
 options: "f7fe90582935f7c0132a61d3055b1b07"
-build_time: [1591324915, 292845000]
+build_time: [1592966339, 908332000]
 inputs:
   "/Users/nmcain/Desktop/dahliaOS/bloom_terminal/macos/Runner/MainFlutterWindow.swift": [1573673235, 0]
   "/Users/nmcain/Desktop/dahliaOS/bloom_terminal/macos/Runner/AppDelegate.swift": [1573673235, 0]
-  "/Users/nmcain/Desktop/dahliaOS/bloom_terminal/macos/Flutter/GeneratedPluginRegistrant.swift": [1591324893, 532438162]
+  "/Users/nmcain/Desktop/dahliaOS/bloom_terminal/macos/Flutter/GeneratedPluginRegistrant.swift": [1592966319, 552016912]
