@@ -37,7 +37,7 @@ class TerminalApp extends StatelessWidget {
 
 
 String runCommand() {
-ProcessResult result = Process.runSync('bash', ['uname -a']);
+ProcessResult result = Process.runSync('. somescript.sh && someexecutable', runInShell: true);
   var verString = result.stdout;
   return verString;
   }
