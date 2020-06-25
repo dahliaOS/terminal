@@ -68,11 +68,11 @@ String output = "";
     super.dispose();
   }
 
-runCommand(String command) {
+runCommand(String command, List<String> args) {
 setState(() {
 //ProcessResult result = Process.runSync('uname', ['-a']);
 print("running "+command+":");
-ProcessResult result = Process.runSync(command, [], runInShell: true);
+ProcessResult result = Process.runSync(command, args, includeParentEnvironment: true,runInShell: true);
    output = result.stdout;
 });
 print(output);
@@ -103,10 +103,14 @@ print(output);
                        style: TextStyle(
                             fontSize: 18, color: Color(0xffffffff))))),
             
-            new IconButton(
+           new IconButton(
             icon: const Icon(Icons.play_arrow),
             onPressed: () {
-            runCommand(myController.text);
+              var commandWithArguments = myController.text.split(' ');
+              var command = commandWithArguments[0]; // command
+              commandWithArguments.removeAt(0); // removes the command from List<String>
+              var args = commandWithArguments;
+            runCommand(command, args);
             print(myController.text);},
             iconSize: 25.0,
             color: const Color(0xFFffffff),
