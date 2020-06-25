@@ -16,6 +16,7 @@ limitations under the License.
 
 import 'package:flutter/material.dart';
 import 'dart:io';
+import 'dart:convert';
 
 void main() {
   runApp(new TerminalApp());
@@ -60,7 +61,9 @@ class _TerminalState extends State<Terminal> {
 final myController = TextEditingController();
 
 String output = "";
+bool yourmotherisbadstreamstate = false;
 
+Future<Process> _process = Process.start('bash', []);
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
@@ -68,26 +71,34 @@ String output = "";
     super.dispose();
   }
 
-runCommand(String command, List<String> args) {
-setState(() {
-//ProcessResult result = Process.runSync('uname', ['-a']);
-print("running "+command+":");
-ProcessResult result = Process.runSync(command, args, includeParentEnvironment: true,runInShell: true);
-   output = result.stdout;
-});
-print(output);
-  }
+updateOutput(var data) {
+    setState(() {
+        print(data);
+        output += "\n" + data;
+    });
+} 
 
     @override
     Widget build(BuildContext context) {
       return new Scaffold(
         backgroundColor: const Color(0xFF222222),
-        body:
-          
-        
-        
-       new Column(children: [
-      Container(
+        body: FutureBuilder<Process>(
+            future: _process,
+            builder: (BuildContext context, AsyncSnapshot<Process> snapshot) {
+                List<Widget> children;
+                if (snapshot.hasData) {
+                var process = snapshot.data; 
+                    if (!yourmotherisbadstreamstate) {
+                        process.stdout
+                            .transform(utf8.decoder)
+                            .listen((data) { print(data); updateOutput(data); });
+                        process.stderr
+                            .transform(utf8.decoder)
+                            .listen((data) { print(data); updateOutput(data); });
+                        yourmotherisbadstreamstate = true;
+                    }
+                    children = <Widget>[
+                          Container(
           height: 55,
           color: Color(0xff292929),
           child: Row(children: [
@@ -106,11 +117,7 @@ print(output);
            new IconButton(
             icon: const Icon(Icons.play_arrow),
             onPressed: () {
-              var commandWithArguments = myController.text.split(' ');
-              var command = commandWithArguments[0]; // command
-              commandWithArguments.removeAt(0); // removes the command from List<String>
-              var args = commandWithArguments;
-            runCommand(command, args);
+             process.stdin.writeln(myController.text);
             print(myController.text);},
             iconSize: 25.0,
             color: const Color(0xFFffffff),
@@ -163,7 +170,18 @@ padding: const EdgeInsets.fromLTRB(2.0, 2.0, 2.0, 2.0),
   cursorWidth: 10.0,
         ),
         padding: const EdgeInsets.fromLTRB(2.0, 2.0, 2.0, 2.0),),
-    ]),        
+    
+                    ];
+                } else {
+                    children = <Widget>[
+                    Text('lol'),
+                    ];
+                }
+                return Column(
+                    children: children,
+                );
+            }
+        )
         
         
 
