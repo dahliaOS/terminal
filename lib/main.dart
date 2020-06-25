@@ -36,11 +36,7 @@ class TerminalApp extends StatelessWidget {
 }
 
 
-String runCommand() {
-ProcessResult result = Process.runSync('. somescript.sh && someexecutable', runInShell: true);
-  var verString = result.stdout;
-  return verString;
-  }
+
      
 
 class Terminal extends StatefulWidget {
@@ -63,6 +59,8 @@ class _TerminalState extends State<Terminal> {
 
 final myController = TextEditingController();
 
+String output = "";
+
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
@@ -70,6 +68,14 @@ final myController = TextEditingController();
     super.dispose();
   }
 
+runCommand(String command) {
+setState(() {
+//ProcessResult result = Process.runSync('uname', ['-a']);
+print("running "+command+":");
+ProcessResult result = Process.runSync(command, ['-a']);
+   output = result.stdout;
+});
+  }
 
     @override
     Widget build(BuildContext context) {
@@ -99,6 +105,7 @@ final myController = TextEditingController();
             new IconButton(
             icon: const Icon(Icons.play_arrow),
             onPressed: () {
+            runCommand(myController.text);
             print(myController.text);},
             iconSize: 25.0,
             color: const Color(0xFFffffff),
@@ -120,7 +127,7 @@ final myController = TextEditingController();
 
     alignment: Alignment.topLeft,
     child: new Text(
-          runCommand(),
+          output,
             style: new TextStyle(fontSize:15.0,
             color: const Color(0xFFf2f2f2),
             fontFamily: "Cousine"),
