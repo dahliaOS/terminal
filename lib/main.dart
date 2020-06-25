@@ -72,9 +72,10 @@ runCommand(String command) {
 setState(() {
 //ProcessResult result = Process.runSync('uname', ['-a']);
 print("running "+command+":");
-ProcessResult result = Process.runSync(command, ['-a']);
+ProcessResult result = Process.runSync(command, [], runInShell: true);
    output = result.stdout;
 });
+print(output);
   }
 
     @override
