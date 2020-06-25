@@ -71,10 +71,16 @@ Future<Process> _process = Process.start('bash', []);
     super.dispose();
   }
 
+pressEnter() {
+    setState(() {
+        output += "\$ " + myController.text + "\n";
+    });
+}
+
 updateOutput(var data) {
     setState(() {
         print(data);
-        output += "\n" + data;
+        output += data;
     });
 } 
 
@@ -118,6 +124,7 @@ updateOutput(var data) {
             icon: const Icon(Icons.play_arrow),
             onPressed: () {
              process.stdin.writeln(myController.text);
+             pressEnter();
             print(myController.text);},
             iconSize: 25.0,
             color: const Color(0xFFffffff),
