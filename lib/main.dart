@@ -181,9 +181,29 @@ updateOutput(var data) {
         padding: const EdgeInsets.fromLTRB(2.0, 2.0, 2.0, 2.0),),
     
                     ];
+                } else if (snapshot.hasError) {
+                    children = <Widget>[
+                        Icon(
+                            Icons.error_outline,
+                            color: Colors.red,
+                            size: 60,
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.only(top: 16),
+                            child: Text('Error: ${snapshot.error}'),
+                        )
+                    ];
                 } else {
                     children = <Widget>[
-                    Text('lol'),
+                    SizedBox(
+                        child: CircularProgressIndicator(),
+                        width: 60,
+                        height: 60,
+                    ),
+                    const Padding(
+                        padding: EdgeInsets.only(top: 16),
+                        child: Text('Loading...'),
+                    )
                     ];
                 }
                 return Column(
