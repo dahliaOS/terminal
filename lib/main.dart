@@ -160,6 +160,15 @@ updateOutput(var data) {
          
          ),
          new Padding(child:
+		RawKeyboardListener(
+			focusNode: FocusNode(),
+			onKey: (event) {
+				if(event.runtimeType.toString() == 'RawKeyDownEvent' && event.logicalKey.keyId == 4295426088) {
+					process.stdin.writeln(myController.text);
+					pressEnter();
+				}
+			},
+			child:
           new TextFormField(
   controller: myController,
  style:    
@@ -178,6 +187,7 @@ updateOutput(var data) {
   cursorRadius: Radius.circular(0.0),
   cursorWidth: 10.0,
         ),
+	),
         padding: const EdgeInsets.fromLTRB(2.0, 2.0, 2.0, 2.0),),
     
                     ];
