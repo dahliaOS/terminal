@@ -17,6 +17,7 @@ limitations under the License.
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:convert';
+import 'rgb.dart';
 
 void main() {
   runApp(new TerminalApp());
@@ -84,6 +85,126 @@ updateOutput(var data) {
     });
 } 
 
+Widget _myWidget(BuildContext context, String myString) {
+
+
+      final wordToStyle = 'text';
+      final style = TextStyle(color: Colors.blue);
+      final spans = _getSpans(myString);
+
+      return RichText(
+        text: TextSpan(
+          style: new TextStyle(fontSize:15.0,
+            color: const Color(0xFFf2f2f2),
+            fontFamily: "SourceCodePro"),//Theme.of(context).textTheme.body1.copyWith(fontSize: 10),
+          children: spans,
+        ),
+      );
+    }
+
+Color getANSI(number, currentShade) {
+
+                switch(number) {
+                    case '30':
+                        return Colors.black;
+                    case '31':
+                        return Colors.red[currentShade];
+                    case '32':
+                        return Colors.green[currentShade];
+                    case '33':
+                        return Colors.yellow[currentShade];
+                    case '34':
+                        return Colors.blue[currentShade];
+                    case '35':
+                        return Colors.pink[currentShade];
+                    case '36':
+                        return Colors.cyan[currentShade];
+                    case '37':
+                        return Colors.white;
+                    case '40':
+                        return Colors.black;
+                    case '41':
+                        return Colors.red[currentShade];
+                    case '42':
+                        return Colors.green[currentShade];
+                    case '43':
+                        return Colors.yellow[currentShade];
+                    case '44':
+                        return Colors.blue[currentShade];
+                    case '45':
+                        return Colors.pink[currentShade];
+                    case '46':
+                        return Colors.cyan[currentShade];
+                    case '47':
+                        return Colors.white;
+                    default:
+                        return Colors.white;
+                }
+  }
+
+    List<TextSpan> _getSpans(String text) {
+      List<TextSpan> spans = [];
+        RegExp re = RegExp(r'\u001b\[(\?)*(\d*|\d+;\d+;\d+)([a-zA-Z])');
+        int spanBoundary = 0;
+        int startIndex = 0;
+        int currentShade = 500;
+        String currentColorCode = '37';
+        String currentBackgroundColorCode = '40';
+        Color currentColor = Color(0xFFf2f2f2);
+        Color currentBackgroundColor = null;
+        while (true) {
+            startIndex = text.indexOf(re, spanBoundary);
+            if (startIndex > spanBoundary) {
+                spans.add(TextSpan(text: text.substring(spanBoundary, startIndex), style: TextStyle(color: currentColor, backgroundColor: currentBackgroundColor)));
+            }
+            if (startIndex == -1) {
+                spans.add(TextSpan(text: text.substring(spanBoundary), style: TextStyle(color: currentColor, backgroundColor: currentBackgroundColor)));
+                return spans;
+            }
+            Match reMatch = re.firstMatch(text.substring(spanBoundary));
+            String match = re.stringMatch(text.substring(spanBoundary));
+            if (reMatch.group(1) == null && reMatch.group(3) == 'm') {
+                String colorCode = reMatch.group(2);
+                switch(colorCode) {
+                    case '0':
+                    case '':
+                        currentShade = 500;
+                        currentColor = Color(0xFFf2f2f2);
+                        currentBackgroundColor = null;
+                        break;
+                    case '1':
+                        currentShade = 300;
+                        currentColor = getANSI(currentColorCode, currentShade);
+                        break;
+                    default:
+                        if (colorCode.contains(';')) {
+                            var args = colorCode.split(';');
+                            colorCode = args[2];
+                            if (args[0]=='38') {
+                        currentColor = Color.fromRGBO(rgb[int.parse(colorCode)][0], rgb[int.parse(colorCode)][1], rgb[int.parse(colorCode)][2], 1.0);
+                            }
+                            else if (args[0]=='48') {
+                                currentBackgroundColor = Color.fromRGBO(rgb[int.parse(colorCode)][0], rgb[int.parse(colorCode)][1], rgb[int.parse(colorCode)][2], 1.0);
+                            }
+                        }
+                        else if (int.parse(colorCode) >= 30 && int.parse(colorCode) < 38) {
+                            currentColorCode = colorCode;
+                            currentColor = getANSI(currentColorCode, currentShade);
+                        }
+                        else if (int.parse(colorCode) >= 40 && int.parse(colorCode) < 48) {
+                            currentBackgroundColorCode = colorCode;
+                            currentBackgroundColor = getANSI(currentBackgroundColorCode, currentShade);
+                        }
+                        break;
+                }
+            }
+            int endIndex = startIndex + match.length;
+            spanBoundary = endIndex;
+        }
+
+      return spans;
+    }
+
     @override
     Widget build(BuildContext context) {
       return new Scaffold(
@@ -147,13 +268,8 @@ updateOutput(var data) {
             new Container( 
 
 
+        child: _myWidget(context, output),
     alignment: Alignment.topLeft,
-    child: new Text(
-          output,
-            style: new TextStyle(fontSize:15.0,
-            color: const Color(0xFFf2f2f2),
-            fontFamily: "Cousine"),
-          ),
             ),
           ),
          
