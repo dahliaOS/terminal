@@ -249,6 +249,7 @@ class _TerminalState extends State<Terminal> {
                           onPressed: () {
                             process.stdin.writeln(myController.text);
                             pressEnter();
+                            myController.clear();
                             print(myController.text);
                           },
                           iconSize: 25.0,
@@ -318,6 +319,7 @@ class _TerminalState extends State<Terminal> {
                             event.logicalKey.keyId == 4295426088) {
                           process.stdin.writeln(myController.text);
                           pressEnter();
+                          myController.clear();
                         }
                       },
                       child: new TextFormField(
