@@ -17,7 +17,7 @@ limitations under the License.
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:convert';
-import 'rgb.dart';
+import '../rgb.dart';
 
 class TerminalFrame extends StatelessWidget {
   @override
@@ -54,7 +54,7 @@ class _TerminalState extends State<Terminal> {
 
   pressEnter() {
     setState(() {
-      output += "\$ " + myController.text + "\n";
+      output += "\# " + myController.text + "\n";
     });
   }
 
@@ -198,26 +198,6 @@ class _TerminalState extends State<Terminal> {
     return spans;
   }
 
-  String ps1() {
-    String os = Platform.operatingSystem;
-    String home = "";
-    Map<String, String> envVars = Platform.environment;
-    if (Platform.isMacOS) {
-      home = envVars['HOME'];
-    } else if (Platform.isLinux) {
-      home = envVars['HOME'];
-    } else if (Platform.isWindows) {
-      home = envVars['UserProfile'];
-    }
-    ProcessResult result = Process.runSync('uname', ['-n']);
-    var HostName = result.stdout;
-    var Shell = home + "@" + HostName + ":~\$";
-    var multiline = Shell;
-    var singleline = multiline.replaceAll("\n", "");
-
-    return singleline;
-  }
-
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -273,7 +253,7 @@ class _TerminalState extends State<Terminal> {
                           fontFamily: "Cousine",
                         ),
                         decoration: InputDecoration.collapsed(
-                          hintText: ps1(),
+                          hintText: "\#",
                           hintStyle: TextStyle(
                               fontWeight: FontWeight.w900,
                               color: const Color(0xFFf2f2f2)),
