@@ -6,8 +6,8 @@
 <a href="https://github.com/dahlia-os/documentation">Documentation</a>
 
 # Terminal
-![GitHub issues](https://img.shields.io/github/issues/dahlia-os/pangolin-desktop?color=brightgreen)
-![GitHub](https://img.shields.io/github/license/dahlia-os/pangolin-desktop?color=brightgreen)
+![GitHub issues](https://img.shields.io/github/issues/dahlia-os/terminal?color=brightgreen)
+![GitHub](https://img.shields.io/github/license/dahlia-os/terminal?color=brightgreen)
 
  - **Terminal for dahliaOS**
 
