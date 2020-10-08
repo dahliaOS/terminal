@@ -7,4 +7,4 @@ version:
   revision: 61b93d25bb0f8499c48c0e4655a349bda3456df6
   channel: unknown
 
-project_type: app
+project_type: package
