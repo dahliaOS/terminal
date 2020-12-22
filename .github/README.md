@@ -1,13 +1,13 @@
 <p align="center">
 <a href="https://dahliaos.io">Website</a> ●
 <a href="https://discord.gg/7qVbJHR">Discord</a> ●
-<a href="https://github.com/dahlia-os/releases/releases">Releases</a> ●
+<a href="https://github.com/dahliaos/releases/releases">Releases</a> ●
 <a href="https://paypal.me/officialdahliaos">Donate</a> ●
-<a href="https://github.com/dahlia-os/documentation">Documentation</a>
+<a href="https://github.com/dahliaos/documentation">Documentation</a>
 
 # Terminal
-![GitHub issues](https://img.shields.io/github/issues/dahlia-os/terminal?color=brightgreen)
-![GitHub](https://img.shields.io/github/license/dahlia-os/terminal?color=brightgreen)
+![GitHub issues](https://img.shields.io/github/issues/dahliaos/terminal?color=brightgreen)
+![GitHub](https://img.shields.io/github/license/dahliaos/terminal?color=brightgreen)
 
  - **Terminal for dahliaOS**
 
@@ -18,7 +18,7 @@ If you're wondering how to contribute to the project, please refer to [CONTRIBUT
 ## License
 
 <p align="left">
-  <img width="40%" src="https://github.com/dahlia-os/brand/blob/master/Logo%20PNGs/dahliaOS%20logo%20with%20text%20(drop%20shadow).png"
+  <img width="40%" src="https://github.com/dahliaos/brand/blob/master/Logo%20PNGs/dahliaOS%20logo%20with%20text%20(drop%20shadow).png"
 </p>
 
 Copyright @ 2019-2020 The dahliaOS Authors contact@dahliaos.io
