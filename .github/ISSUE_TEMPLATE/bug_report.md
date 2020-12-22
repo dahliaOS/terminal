@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help us improve the desktop
+about: Create a report to help us improve the terminal
 title: ''
 labels: ''
 assignees: ''
@@ -29,11 +29,6 @@ If applicable, add screenshots to help explain your problem.
 **Desktop (please complete the following information):**
  - OS: [e.g. dahliaOS Linux, dahliaOS Zircon]
  - Device: [e.g. MacbookPro9,1, QEMU]
-
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. Android, dahliaOS Zircon, dahliaOS Linux]
- - Execution Method: [e.g. ADB, Zircon tool]
 
 **dahliaOS build version**
 Write what version of dahliaOS you were using.
