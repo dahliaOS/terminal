@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest an idea for Pangolin
+about: Suggest an idea for the terminal
 title: ''
 labels: ''
 assignees: ''
@@ -17,7 +17,7 @@ A clear and concise description of what you want to happen.
 A clear and concise description of any alternative solutions or features you've considered.
 
 **For which platform is this feature request?**
-- Platform: [Linux, Zircon or Mobile]
+- Platform: [Linux or Zircon]
 
 **Do you have an idea of how we would add it?**
 If you know how we would approach adding this feature, tell us how.
