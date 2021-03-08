@@ -43,14 +43,14 @@ class TerminalApp extends StatelessWidget {
 }
 
 class TerminalUI extends StatefulWidget {
-  TerminalUI({Key key}) : super(key: key);
+  TerminalUI({Key? key}) : super(key: key);
   @override
   TerminalUIState createState() => new TerminalUIState();
 }
 
 class TerminalUIState extends State<TerminalUI> with TickerProviderStateMixin {
   List<Tab> tabs = [];
-  TabController tabController;
+  late TabController tabController;
   var count = 1;
   void newTab() {
     setState(() {

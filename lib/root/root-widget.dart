@@ -33,7 +33,7 @@ class TerminalFrame extends StatelessWidget {
 }
 
 class Terminal extends StatefulWidget {
-  Terminal({Key key}) : super(key: key);
+  Terminal({Key? key}) : super(key: key);
   @override
   _TerminalState createState() => new _TerminalState();
 }
@@ -87,33 +87,33 @@ class _TerminalState extends State<Terminal> {
       case '30':
         return Colors.black;
       case '31':
-        return Colors.red[currentShade];
+        return Colors.red[currentShade]!;
       case '32':
-        return Colors.green[currentShade];
+        return Colors.green[currentShade]!;
       case '33':
-        return Colors.yellow[currentShade];
+        return Colors.yellow[currentShade]!;
       case '34':
-        return Colors.blue[currentShade];
+        return Colors.blue[currentShade]!;
       case '35':
-        return Colors.pink[currentShade];
+        return Colors.pink[currentShade]!;
       case '36':
-        return Colors.cyan[currentShade];
+        return Colors.cyan[currentShade]!;
       case '37':
         return Colors.white;
       case '40':
         return Colors.black;
       case '41':
-        return Colors.red[currentShade];
+        return Colors.red[currentShade]!;
       case '42':
-        return Colors.green[currentShade];
+        return Colors.green[currentShade]!;
       case '43':
-        return Colors.yellow[currentShade];
+        return Colors.yellow[currentShade]!;
       case '44':
-        return Colors.blue[currentShade];
+        return Colors.blue[currentShade]!;
       case '45':
-        return Colors.pink[currentShade];
+        return Colors.pink[currentShade]!;
       case '46':
-        return Colors.cyan[currentShade];
+        return Colors.cyan[currentShade]!;
       case '47':
         return Colors.white;
       default:
@@ -130,7 +130,7 @@ class _TerminalState extends State<Terminal> {
     String currentColorCode = '37';
     String currentBackgroundColorCode = '40';
     Color currentColor = Color(0xFFf2f2f2);
-    Color currentBackgroundColor = null;
+    Color? currentBackgroundColor;
     while (true) {
       startIndex = text.indexOf(re, spanBoundary);
       if (startIndex > spanBoundary) {
@@ -146,10 +146,10 @@ class _TerminalState extends State<Terminal> {
                 color: currentColor, backgroundColor: currentBackgroundColor)));
         return spans;
       }
-      Match reMatch = re.firstMatch(text.substring(spanBoundary));
-      String match = re.stringMatch(text.substring(spanBoundary));
+      Match reMatch = re.firstMatch(text.substring(spanBoundary))!;
+      String match = re.stringMatch(text.substring(spanBoundary))!;
       if (reMatch.group(1) == null && reMatch.group(3) == 'm') {
-        String colorCode = reMatch.group(2);
+        String colorCode = reMatch.group(2)!;
         switch (colorCode) {
           case '0':
           case '':
@@ -167,15 +167,15 @@ class _TerminalState extends State<Terminal> {
               colorCode = args[2];
               if (args[0] == '38') {
                 currentColor = Color.fromRGBO(
-                    rgb[int.parse(colorCode)][0],
-                    rgb[int.parse(colorCode)][1],
-                    rgb[int.parse(colorCode)][2],
+                    rgb[int.parse(colorCode)]![0],
+                    rgb[int.parse(colorCode)]![1],
+                    rgb[int.parse(colorCode)]![2],
                     1.0);
               } else if (args[0] == '48') {
                 currentBackgroundColor = Color.fromRGBO(
-                    rgb[int.parse(colorCode)][0],
-                    rgb[int.parse(colorCode)][1],
-                    rgb[int.parse(colorCode)][2],
+                    rgb[int.parse(colorCode)]![0],
+                    rgb[int.parse(colorCode)]![1],
+                    rgb[int.parse(colorCode)]![2],
                     1.0);
               }
             } else if (int.parse(colorCode) >= 30 &&
@@ -209,11 +209,11 @@ class _TerminalState extends State<Terminal> {
               if (snapshot.hasData) {
                 var process = snapshot.data;
                 if (!yourmotherisbadstreamstate) {
-                  process.stdout.transform(utf8.decoder).listen((data) {
+                  process?.stdout.transform(utf8.decoder).listen((data) {
                     print(data);
                     updateOutput(data);
                   });
-                  process.stderr.transform(utf8.decoder).listen((data) {
+                  process?.stderr.transform(utf8.decoder).listen((data) {
                     print(data);
                     updateOutput(data);
                   });
@@ -240,7 +240,7 @@ class _TerminalState extends State<Terminal> {
                       onKey: (event) {
                         if (event.runtimeType.toString() == 'RawKeyDownEvent' &&
                             event.logicalKey.keyId == 4295426088) {
-                          process.stdin.writeln(myController.text);
+                          process?.stdin.writeln(myController.text);
                           pressEnter();
                           myController.clear();
                         }
