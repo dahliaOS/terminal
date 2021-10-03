@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Terminal
+Exec=terminal
+Terminal=false
+Icon=terminal
+Type=Application
+Categories=Utility;
