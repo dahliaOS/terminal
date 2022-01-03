@@ -12,6 +12,7 @@ limitations under the License.
 */
 
 import 'package:flutter/material.dart';
+
 import 'terminal_widget.dart';
 
 void main() => runApp(const TerminalApp());
@@ -44,6 +45,7 @@ class TerminalApp extends StatelessWidget {
 
 class TerminalUI extends StatefulWidget {
   const TerminalUI({Key? key}) : super(key: key);
+
   @override
   TerminalUIState createState() => TerminalUIState();
 }
@@ -52,6 +54,7 @@ class TerminalUIState extends State<TerminalUI> with TickerProviderStateMixin {
   List<Tab> tabs = [];
   late TabController tabController;
   var count = 1;
+
   void newTab() {
     setState(() {
       tabs.add(

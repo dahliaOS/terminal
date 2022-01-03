@@ -11,10 +11,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
-import 'dart:convert';
+
 import 'rgb.dart';
 
 class TerminalApp extends StatelessWidget {
@@ -34,6 +36,7 @@ class TerminalApp extends StatelessWidget {
 
 class Terminal extends StatefulWidget {
   const Terminal({Key? key}) : super(key: key);
+
   @override
   _TerminalState createState() => _TerminalState();
 }
@@ -45,6 +48,7 @@ class _TerminalState extends State<Terminal> {
   bool yourmotherisbadstreamstate = false;
 
   final Future<Process> _process = Process.start('bash', []);
+
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
@@ -73,10 +77,8 @@ class _TerminalState extends State<Terminal> {
     return RichText(
       text: TextSpan(
         style: const TextStyle(
-            fontSize: 15.0,
-            color: Color(0xFFf2f2f2),
-            fontFamily:
-                "Cousine"), //Theme.of(context).textTheme.body1.copyWith(fontSize: 10),
+            fontSize: 15.0, color: Color(0xFFf2f2f2), fontFamily: "Cousine"),
+        //Theme.of(context).textTheme.body1.copyWith(fontSize: 10),
         children: spans,
       ),
     );

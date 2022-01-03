@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import 'package:flutter/material.dart';
+
 import 'root_widget.dart';
 
 void main() => runApp(const RootTerminalApp());
@@ -39,6 +40,7 @@ class RootTerminalApp extends StatelessWidget {
 
 class RootTerminal extends StatefulWidget {
   const RootTerminal({Key? key}) : super(key: key);
+
   @override
   RootTerminalState createState() => RootTerminalState();
 }
@@ -48,6 +50,7 @@ class RootTerminalState extends State<RootTerminal>
   List<Tab> tabs = [];
   late TabController tabController;
   var count = 1;
+
   void newTab() {
     setState(() {
       tabs.add(
