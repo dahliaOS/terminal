@@ -19,20 +19,20 @@ import 'rgb.dart';
 class TerminalApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
       title: 'Terminal',
-      theme: new ThemeData(
+      theme: ThemeData(
         primarySwatch: Colors.grey,
       ),
-      home: new Terminal(),
+      home: Terminal(),
     );
   }
 }
 
 class Terminal extends StatefulWidget {
-  Terminal({Key? key}) : super(key: key);
+  const Terminal({Key? key}) : super(key: key);
   @override
-  _TerminalState createState() => new _TerminalState();
+  _TerminalState createState() => _TerminalState();
 }
 
 class _TerminalState extends State<Terminal> {
@@ -41,7 +41,7 @@ class _TerminalState extends State<Terminal> {
   String output = "";
   bool yourmotherisbadstreamstate = false;
 
-  Future<Process> _process = Process.start('bash', []);
+  final Future<Process> _process = Process.start('bash', []);
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
@@ -63,13 +63,13 @@ class _TerminalState extends State<Terminal> {
   }
 
   Widget _myWidget(BuildContext context, String myString) {
-    final wordToStyle = 'text';
-    final style = TextStyle(color: Colors.blue);
+    const wordToStyle = 'text';
+    final style = const TextStyle(color: Colors.blue);
     final spans = _getSpans(myString);
 
     return RichText(
       text: TextSpan(
-        style: new TextStyle(
+        style: TextStyle(
             fontSize: 15.0,
             color: const Color(0xFFf2f2f2),
             fontFamily:
@@ -126,7 +126,7 @@ class _TerminalState extends State<Terminal> {
     int currentShade = 500;
     String currentColorCode = '37';
     String currentBackgroundColorCode = '40';
-    Color currentColor = Color(0xFFf2f2f2);
+    Color currentColor = const Color(0xFFf2f2f2);
     Color? currentBackgroundColor;
     while (true) {
       startIndex = text.indexOf(re, spanBoundary);
@@ -151,7 +151,7 @@ class _TerminalState extends State<Terminal> {
           case '0':
           case '':
             currentShade = 500;
-            currentColor = Color(0xFFf2f2f2);
+            currentColor = const Color(0xFFf2f2f2);
             currentBackgroundColor = null;
             break;
           case '1':
@@ -217,7 +217,7 @@ class _TerminalState extends State<Terminal> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
         backgroundColor: const Color(0xFF222222),
         body: FutureBuilder<Process>(
             future: _process,
@@ -239,19 +239,19 @@ class _TerminalState extends State<Terminal> {
                 children = <Widget>[
                   Container(
                       height: 0,
-                      color: Color(0xff292929),
-                      child: Row(children: [])),
-                  new Expanded(
+                      color: const Color(0xff292929),
+                      child: Row(children: const [])),
+                  Expanded(
                     child: SingleChildScrollView(
                       padding: const EdgeInsets.fromLTRB(2.0, 2.0, 2.0, 2.0),
                       scrollDirection: Axis.vertical,
-                      child: new Container(
+                      child: Container(
                         child: _myWidget(context, output),
                         alignment: Alignment.topLeft,
                       ),
                     ),
                   ),
-                  new Padding(
+                  Padding(
                     child: RawKeyboardListener(
                       focusNode: FocusNode(),
                       onKey: (event) {
@@ -262,18 +262,18 @@ class _TerminalState extends State<Terminal> {
                           myController.clear();
                         }
                       },
-                      child: new TextFormField(
+                      child: TextFormField(
                         controller: myController,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 15.0,
-                          color: const Color(0xFFf2f2f2),
+                          color: Color(0xFFf2f2f2),
                           fontFamily: "Cousine",
                         ),
                         decoration: InputDecoration.collapsed(
                           hintText: ps1(),
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                               fontWeight: FontWeight.w900,
-                              color: const Color(0xFFf2f2f2)),
+                              color: Color(0xFFf2f2f2)),
                         ),
                         autocorrect: false,
                         autofocus: true,
@@ -282,7 +282,7 @@ class _TerminalState extends State<Terminal> {
 
                         //initialValue: "debug_shell \$",
                         cursorColor: const Color(0xFFf2f2f2),
-                        cursorRadius: Radius.circular(0.0),
+                        cursorRadius: const Radius.circular(0.0),
                         cursorWidth: 10.0,
                       ),
                     ),
@@ -291,7 +291,7 @@ class _TerminalState extends State<Terminal> {
                 ];
               } else if (snapshot.hasError) {
                 children = <Widget>[
-                  Icon(
+                  const Icon(
                     Icons.error_outline,
                     color: Colors.red,
                     size: 60,
@@ -303,7 +303,7 @@ class _TerminalState extends State<Terminal> {
                 ];
               } else {
                 children = <Widget>[
-                  SizedBox(
+                  const SizedBox(
                     child: CircularProgressIndicator(),
                     width: 60,
                     height: 60,

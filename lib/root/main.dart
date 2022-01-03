@@ -24,23 +24,23 @@ void main() => runApp(RootTerminalApp());
 class RootTerminalApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
       title: 'Terminal',
-      theme: new ThemeData(
+      theme: ThemeData(
         brightness: Brightness.dark,
         primarySwatch: Colors.red,
         primaryColor: const Color(0xFF212121),
         canvasColor: const Color(0xFF303030),
       ),
-      home: new RootTerminal(),
+      home: RootTerminal(),
     );
   }
 }
 
 class RootTerminal extends StatefulWidget {
-  RootTerminal({Key? key}) : super(key: key);
+  const RootTerminal({Key? key}) : super(key: key);
   @override
-  RootTerminalState createState() => new RootTerminalState();
+  RootTerminalState createState() => RootTerminalState();
 }
 
 class RootTerminalState extends State<RootTerminal>
@@ -55,12 +55,12 @@ class RootTerminalState extends State<RootTerminal>
           child: Row(
             children: <Widget>[
               Text('Root Session ' '$count'),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.only(left: 8),
               ),
-              new Expanded(child: new Container()),
+              Expanded(child: Container()),
               GestureDetector(
-                child: Icon(
+                child: const Icon(
                   Icons.clear,
                   size: 16,
                   //color: Colors.black,
@@ -90,13 +90,13 @@ class RootTerminalState extends State<RootTerminal>
       Tab(
         child: Row(
           children: <Widget>[
-            Text('Root Session ' '0'),
-            Padding(
+            const Text('Root Session ' '0'),
+            const Padding(
               padding: EdgeInsets.only(left: 8),
             ),
-            new Expanded(child: new Container()),
+            Expanded(child: Container()),
             GestureDetector(
-              child: Icon(
+              child: const Icon(
                 Icons.clear,
                 size: 16,
                 //color: Colors.black,
@@ -120,46 +120,46 @@ class RootTerminalState extends State<RootTerminal>
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-          backgroundColor: Color(0xFF212121),
+          backgroundColor: const Color(0xFF212121),
           appBar: PreferredSize(
-              preferredSize: Size.fromHeight(
+              preferredSize: const Size.fromHeight(
                   55.0), // here the desired height of the status bar
               child: AppBar(
                   elevation: 0.0,
                   backgroundColor: Colors.red[600],
                   bottom: PreferredSize(
-                      preferredSize: Size.fromHeight(
+                      preferredSize: const Size.fromHeight(
                           55.0), // here the desired height of the status bar
-                      child: new Row(
+                      child: Row(
                         children: [
-                          new Expanded(
-                              child: new Container(
+                          Expanded(
+                              child: Container(
                             child: TabBar(
                                 controller: tabController,
-                                labelColor: Color(0xFFffffff),
+                                labelColor: const Color(0xFFffffff),
                                 unselectedLabelColor: Colors.white,
-                                indicator: BoxDecoration(
+                                indicator: const BoxDecoration(
                                     borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(5),
                                         topRight: Radius.circular(5)),
                                     color: Color(0xFF212121)),
                                 tabs: tabs.map((tab) => tab).toList()),
                           )),
-                          new Center(
-                            child: new IconButton(
-                                icon: Icon(Icons.add),
+                          Center(
+                            child: IconButton(
+                                icon: const Icon(Icons.add),
                                 color: Colors.white,
                                 onPressed: newTab),
                           ),
-                          new Center(
-                            child: new IconButton(
-                                icon: Icon(Icons.play_arrow),
+                          Center(
+                            child: IconButton(
+                                icon: const Icon(Icons.play_arrow),
                                 color: Colors.white,
                                 onPressed: newTab),
                           ),
-                          new Center(
-                            child: new IconButton(
-                                icon: Icon(Icons.more_vert),
+                          Center(
+                            child: IconButton(
+                                icon: const Icon(Icons.more_vert),
                                 color: Colors.white,
                                 onPressed: newTab),
                           )
@@ -168,10 +168,10 @@ class RootTerminalState extends State<RootTerminal>
                   )),
           body: Stack(
             children: [
-              new Center(
-                child: new Text(
+              Center(
+                child: const Text(
                   "owo whats this",
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                 ),
               ),
               TabBarView(
