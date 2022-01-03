@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'root-widget.dart';
+import 'root_widget.dart';
 
-void main() => runApp(RootTerminalApp());
+void main() => runApp(const RootTerminalApp());
 
 class RootTerminalApp extends StatelessWidget {
+  const RootTerminalApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,7 +32,7 @@ class RootTerminalApp extends StatelessWidget {
         primaryColor: const Color(0xFF212121),
         canvasColor: const Color(0xFF303030),
       ),
-      home: RootTerminal(),
+      home: const RootTerminal(),
     );
   }
 }
@@ -133,18 +133,16 @@ class RootTerminalState extends State<RootTerminal>
                       child: Row(
                         children: [
                           Expanded(
-                              child: Container(
-                            child: TabBar(
-                                controller: tabController,
-                                labelColor: const Color(0xFFffffff),
-                                unselectedLabelColor: Colors.white,
-                                indicator: const BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(5),
-                                        topRight: Radius.circular(5)),
-                                    color: Color(0xFF212121)),
-                                tabs: tabs.map((tab) => tab).toList()),
-                          )),
+                              child: TabBar(
+                                  controller: tabController,
+                                  labelColor: const Color(0xFFffffff),
+                                  unselectedLabelColor: Colors.white,
+                                  indicator: const BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(5),
+                                          topRight: Radius.circular(5)),
+                                      color: Color(0xFF212121)),
+                                  tabs: tabs.map((tab) => tab).toList())),
                           Center(
                             child: IconButton(
                                 icon: const Icon(Icons.add),
@@ -168,15 +166,15 @@ class RootTerminalState extends State<RootTerminal>
                   )),
           body: Stack(
             children: [
-              Center(
-                child: const Text(
+              const Center(
+                child: Text(
                   "owo whats this",
-                  style: const TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.white),
                 ),
               ),
               TabBarView(
                 controller: tabController,
-                children: tabs.map((tab) => Terminal()).toList(),
+                children: tabs.map((tab) => const Terminal()).toList(),
               ),
             ],
           )),

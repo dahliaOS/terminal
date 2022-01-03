@@ -10,15 +10,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import 'dart:io';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'terminal-widget.dart';
+import 'terminal_widget.dart';
 
-void main() => runApp(TerminalApp());
+void main() => runApp(const TerminalApp());
 
 class TerminalApp extends StatelessWidget {
+  const TerminalApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -27,14 +27,16 @@ class TerminalApp extends StatelessWidget {
         brightness: Brightness.dark,
         primaryColor: const Color(0xFF212121),
         canvasColor: const Color(0xFF303030),
-        platform: TargetPlatform.fuchsia, colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.deepOrange).copyWith(secondary: const Color(0xFFff6507)),
+        platform: TargetPlatform.fuchsia,
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.deepOrange)
+            .copyWith(secondary: const Color(0xFFff6507)),
       ),
       initialRoute: '/',
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
-        '/': (context) => TerminalUI(),
+        '/': (context) => const TerminalUI(),
         // When navigating to the "/second" route, build the SecondScreen widget.
-        '/second': (context) => SettingsScreen(),
+        '/second': (context) => const SettingsScreen(),
       },
     );
   }
@@ -133,7 +135,8 @@ class TerminalUIState extends State<TerminalUI> with TickerProviderStateMixin {
       home: Scaffold(
         backgroundColor: const Color(0xFF212121),
         appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(55.0), // here the desired height
+            preferredSize:
+                const Size.fromHeight(55.0), // here the desired height
             child: AppBar(
                 elevation: 0.0,
                 backgroundColor: const Color(0xFF282828),
@@ -143,18 +146,16 @@ class TerminalUIState extends State<TerminalUI> with TickerProviderStateMixin {
                     child: Row(
                       children: [
                         Expanded(
-                            child: Container(
-                          child: TabBar(
-                              controller: tabController,
-                              labelColor: const Color(0xFFffffff),
-                              unselectedLabelColor: Colors.white,
-                              indicator: const BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(5),
-                                      topRight: Radius.circular(5)),
-                                  color: Color(0xFF212121)),
-                              tabs: tabs.map((tab) => tab).toList()),
-                        )),
+                            child: TabBar(
+                                controller: tabController,
+                                labelColor: const Color(0xFFffffff),
+                                unselectedLabelColor: Colors.white,
+                                indicator: const BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(5),
+                                        topRight: Radius.circular(5)),
+                                    color: Color(0xFF212121)),
+                                tabs: tabs.map((tab) => tab).toList())),
                         Center(
                           child: IconButton(
                               icon: const Icon(Icons.add),
@@ -176,7 +177,7 @@ class TerminalUIState extends State<TerminalUI> with TickerProviderStateMixin {
                 )),
         body: TabBarView(
           controller: tabController,
-          children: tabs.map((tab) => Terminal()).toList(),
+          children: tabs.map((tab) => const Terminal()).toList(),
         ),
       ),
     );
@@ -184,6 +185,8 @@ class TerminalUIState extends State<TerminalUI> with TickerProviderStateMixin {
 }
 
 class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -207,7 +210,7 @@ class SettingsScreen extends StatelessWidget {
               ],
             ),
           ),
-          body: TabBarView(
+          body: const TabBarView(
             children: [
               Center(
                 child: SizedBox(
@@ -215,9 +218,9 @@ class SettingsScreen extends StatelessWidget {
                   child: AppearanceWidget(),
                 ),
               ),
-              const Icon(Icons.directions_transit),
-              const Icon(Icons.directions_bike),
-              const Icon(Icons.directions_bike),
+              Icon(Icons.directions_transit),
+              Icon(Icons.directions_bike),
+              Icon(Icons.directions_bike),
             ],
           ),
         ));
@@ -278,6 +281,8 @@ Widget themeCard(Color bgcolor, Color fgcolor1, Color fgcolor2, Color fgcolor3,
 }
 
 class AppearanceWidget extends StatelessWidget {
+  const AppearanceWidget({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -290,10 +295,9 @@ class AppearanceWidget extends StatelessWidget {
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                  Text(
+                  const Text(
                     "Theme",
-                    style: const TextStyle(
-                        fontSize: 15, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -308,8 +312,12 @@ class AppearanceWidget extends StatelessWidget {
                               const Color(0xFFf2f2f2),
                               const Color(0xFFf2f2f2),
                               "Default Dark"),
-                          themeCard(const Color(0xff150896), const Color(0xff766CF9),
-                              const Color(0xff766CF9), const Color(0xff766CF9), "C64"),
+                          themeCard(
+                              const Color(0xff150896),
+                              const Color(0xff766CF9),
+                              const Color(0xff766CF9),
+                              const Color(0xff766CF9),
+                              "C64"),
                           themeCard(Colors.white, Colors.black, Colors.black,
                               Colors.black, "xterm"),
                           themeCard(
@@ -324,14 +332,30 @@ class AppearanceWidget extends StatelessWidget {
                               const Color(0xff32cd32),
                               const Color(0xff32cd32),
                               "Hackerman"),
-                          themeCard(const Color(0xff282a36), const Color(0xffbd93f9),
-                              const Color(0xff50fa7b), const Color(0xfff8f8f2), "Dracula"),
-                          themeCard(const Color(0xff2D0922), const Color(0xff7EDA34),
-                              const Color(0xff1D89D6), const Color(0xffFDFEFC), "Unity"),
-                          themeCard(const Color(0xff26292E), const Color(0xffF85A5A),
-                              const Color(0xff39ABDC), const Color(0xffFDFEFC), "Subspace"),
-                          themeCard(const Color(0xff212D34), const Color(0xff55B1C2),
-                              const Color(0xff32A5F1), const Color(0xff7DE5D2), "Argon"),
+                          themeCard(
+                              const Color(0xff282a36),
+                              const Color(0xffbd93f9),
+                              const Color(0xff50fa7b),
+                              const Color(0xfff8f8f2),
+                              "Dracula"),
+                          themeCard(
+                              const Color(0xff2D0922),
+                              const Color(0xff7EDA34),
+                              const Color(0xff1D89D6),
+                              const Color(0xffFDFEFC),
+                              "Unity"),
+                          themeCard(
+                              const Color(0xff26292E),
+                              const Color(0xffF85A5A),
+                              const Color(0xff39ABDC),
+                              const Color(0xffFDFEFC),
+                              "Subspace"),
+                          themeCard(
+                              const Color(0xff212D34),
+                              const Color(0xff55B1C2),
+                              const Color(0xff32A5F1),
+                              const Color(0xff7DE5D2),
+                              "Argon"),
                           themeCard(
                               const Color(0xffe0e0e0),
                               const Color(0xff616161),

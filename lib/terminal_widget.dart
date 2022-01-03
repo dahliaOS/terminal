@@ -1,12 +1,9 @@
 /*
 Copyright 2020 The dahliaOS Authors
-
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
-
     http://www.apache.org/licenses/LICENSE-2.0
-
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,12 +11,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:convert';
-import '../rgb.dart';
+import 'rgb.dart';
 
-class TerminalFrame extends StatelessWidget {
+class TerminalApp extends StatelessWidget {
+  const TerminalApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -27,7 +27,7 @@ class TerminalFrame extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.grey,
       ),
-      home: Terminal(),
+      home: const Terminal(),
     );
   }
 }
@@ -54,27 +54,27 @@ class _TerminalState extends State<Terminal> {
 
   pressEnter() {
     setState(() {
-      output += "# " + myController.text + "\n";
+      output += "\$ " + myController.text + "\n";
     });
   }
 
   updateOutput(var data) {
     setState(() {
-      print(data);
+      if (kDebugMode) {
+        print(data);
+      }
       output += data;
     });
   }
 
   Widget _myWidget(BuildContext context, String myString) {
-    const wordToStyle = 'text';
-    final style = const TextStyle(color: Colors.blue);
     final spans = _getSpans(myString);
 
     return RichText(
       text: TextSpan(
         style: const TextStyle(
             fontSize: 15.0,
-            color: const Color(0xFFf2f2f2),
+            color: Color(0xFFf2f2f2),
             fontFamily:
                 "Cousine"), //Theme.of(context).textTheme.body1.copyWith(fontSize: 10),
         children: spans,
@@ -194,8 +194,25 @@ class _TerminalState extends State<Terminal> {
       int endIndex = startIndex + match.length;
       spanBoundary = endIndex;
     }
+  }
 
-    return spans;
+  String ps1() {
+    String home = "";
+    Map<String, String> envVars = Platform.environment;
+    if (Platform.isMacOS) {
+      home = envVars['HOME']!;
+    } else if (Platform.isLinux) {
+      home = envVars['HOME']!;
+    } else if (Platform.isWindows) {
+      home = envVars['UserProfile']!;
+    }
+    ProcessResult result = Process.runSync('uname', ['-n']);
+    var hostName = result.stdout;
+    var shell = home + "@" + hostName + ":~\$";
+    var multiline = shell;
+    var singleline = multiline.replaceAll("\n", "");
+
+    return singleline;
   }
 
   @override
@@ -210,11 +227,15 @@ class _TerminalState extends State<Terminal> {
                 var process = snapshot.data;
                 if (!yourmotherisbadstreamstate) {
                   process?.stdout.transform(utf8.decoder).listen((data) {
-                    print(data);
+                    if (kDebugMode) {
+                      print(data);
+                    }
                     updateOutput(data);
                   });
                   process?.stderr.transform(utf8.decoder).listen((data) {
-                    print(data);
+                    if (kDebugMode) {
+                      print(data);
+                    }
                     updateOutput(data);
                   });
                   yourmotherisbadstreamstate = true;
@@ -252,9 +273,9 @@ class _TerminalState extends State<Terminal> {
                           color: Color(0xFFf2f2f2),
                           fontFamily: "Cousine",
                         ),
-                        decoration: const InputDecoration.collapsed(
-                          hintText: "#",
-                          hintStyle: TextStyle(
+                        decoration: InputDecoration.collapsed(
+                          hintText: ps1(),
+                          hintStyle: const TextStyle(
                               fontWeight: FontWeight.w900,
                               color: Color(0xFFf2f2f2)),
                         ),
