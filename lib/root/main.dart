@@ -16,7 +16,7 @@ limitations under the License.
 
 import 'package:flutter/material.dart';
 
-import 'root_widget.dart';
+import 'package:terminal/root/root_widget.dart';
 
 void main() => runApp(const RootTerminalApp());
 
@@ -49,7 +49,7 @@ class RootTerminalState extends State<RootTerminal>
     with TickerProviderStateMixin {
   List<Tab> tabs = [];
   late TabController tabController;
-  var count = 1;
+  int count = 1;
 
   void newTab() {
     setState(() {
@@ -63,12 +63,12 @@ class RootTerminalState extends State<RootTerminal>
               ),
               Expanded(child: Container()),
               GestureDetector(
+                onTap: closeCurrentTab,
                 child: const Icon(
                   Icons.clear,
                   size: 16,
                   //color: Colors.black,
                 ),
-                onTap: closeCurrentTab,
               ),
             ],
           ),
@@ -99,12 +99,12 @@ class RootTerminalState extends State<RootTerminal>
             ),
             Expanded(child: Container()),
             GestureDetector(
+              onTap: closeCurrentTab,
               child: const Icon(
                 Icons.clear,
                 size: 16,
                 //color: Colors.black,
               ),
-              onTap: closeCurrentTab,
             ),
           ],
         ),
@@ -123,64 +123,76 @@ class RootTerminalState extends State<RootTerminal>
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-          backgroundColor: const Color(0xFF212121),
-          appBar: PreferredSize(
+        backgroundColor: const Color(0xFF212121),
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(
+            55.0,
+          ), // here the desired height of the status bar
+          child: AppBar(
+            elevation: 0.0,
+            backgroundColor: Colors.red[600],
+            bottom: PreferredSize(
               preferredSize: const Size.fromHeight(
-                  55.0), // here the desired height of the status bar
-              child: AppBar(
-                  elevation: 0.0,
-                  backgroundColor: Colors.red[600],
-                  bottom: PreferredSize(
-                      preferredSize: const Size.fromHeight(
-                          55.0), // here the desired height of the status bar
-                      child: Row(
-                        children: [
-                          Expanded(
-                              child: TabBar(
-                                  controller: tabController,
-                                  labelColor: const Color(0xFFffffff),
-                                  unselectedLabelColor: Colors.white,
-                                  indicator: const BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(5),
-                                          topRight: Radius.circular(5)),
-                                      color: Color(0xFF212121)),
-                                  tabs: tabs.map((tab) => tab).toList())),
-                          Center(
-                            child: IconButton(
-                                icon: const Icon(Icons.add),
-                                color: Colors.white,
-                                onPressed: newTab),
-                          ),
-                          Center(
-                            child: IconButton(
-                                icon: const Icon(Icons.play_arrow),
-                                color: Colors.white,
-                                onPressed: newTab),
-                          ),
-                          Center(
-                            child: IconButton(
-                                icon: const Icon(Icons.more_vert),
-                                color: Colors.white,
-                                onPressed: newTab),
-                          )
-                        ],
-                      )) // A trick to trigger TabBar rebuild.
-                  )),
-          body: Stack(
-            children: [
-              const Center(
-                child: Text(
-                  "owo whats this",
-                  style: TextStyle(color: Colors.white),
-                ),
+                55.0,
+              ), // here the desired height of the status bar
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TabBar(
+                      controller: tabController,
+                      labelColor: const Color(0xFFffffff),
+                      unselectedLabelColor: Colors.white,
+                      indicator: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(5),
+                          topRight: Radius.circular(5),
+                        ),
+                        color: Color(0xFF212121),
+                      ),
+                      tabs: tabs.map((tab) => tab).toList(),
+                    ),
+                  ),
+                  Center(
+                    child: IconButton(
+                      icon: const Icon(Icons.add),
+                      color: Colors.white,
+                      onPressed: newTab,
+                    ),
+                  ),
+                  Center(
+                    child: IconButton(
+                      icon: const Icon(Icons.play_arrow),
+                      color: Colors.white,
+                      onPressed: newTab,
+                    ),
+                  ),
+                  Center(
+                    child: IconButton(
+                      icon: const Icon(Icons.more_vert),
+                      color: Colors.white,
+                      onPressed: newTab,
+                    ),
+                  )
+                ],
               ),
-              TabBarView(
-                controller: tabController,
-                children: tabs.map((tab) => const Terminal()).toList(),
+            ), // A trick to trigger TabBar rebuild.
+          ),
+        ),
+        body: Stack(
+          children: [
+            const Center(
+              child: Text(
+                "owo whats this",
+                style: TextStyle(color: Colors.white),
               ),
-            ],
-          )),
+            ),
+            TabBarView(
+              controller: tabController,
+              children: tabs.map((tab) => const Terminal()).toList(),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
