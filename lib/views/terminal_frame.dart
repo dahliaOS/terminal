@@ -103,6 +103,13 @@ class _TerminalFrameState extends State<TerminalFrame> {
                   tabs.removeAt(mIndex);
                   index = tabs.length - 1;
                 });
+                  if (index == -1) {
+                    if (Platform.isAndroid) {
+                      SystemNavigator.pop();
+                    } else {
+                      exit(0);
+                    }
+                  }
               },
             ),
           ),
