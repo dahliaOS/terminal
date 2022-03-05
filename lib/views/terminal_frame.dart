@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/material.dart' as m;
+import 'package:flutter/services.dart';
 import 'package:pty/pty.dart';
 import 'package:terminal/constants/constants.dart';
 import 'package:terminal/views/terminal_settings.dart';
@@ -91,18 +92,19 @@ class _TerminalFrameState extends State<TerminalFrame> {
           },
           tabs: List.generate(
             tabs.length,
-            (mIndex) => Tab(
-              text: Row(
-                children: [
-                  Text("Terminal ${mIndex + 1}"),
-                ],
-              ),
-              icon: const Icon(m.Icons.computer),
-              onClosed: () {
-                setState(() {
-                  tabs.removeAt(mIndex);
-                  index = tabs.length - 1;
-                });
+            (mIndex) {
+              var tab = Tab(
+                text: Row(
+                  children: [
+                    Text("Terminal ${mIndex + 1}"),
+                  ],
+                ),
+                icon: const Icon(m.Icons.computer),
+                onClosed: () {
+                  setState(() {
+                    tabs.removeAt(mIndex);
+                    index = tabs.length - 1;
+                  });
                   if (index == -1) {
                     if (Platform.isAndroid) {
                       SystemNavigator.pop();
@@ -110,8 +112,26 @@ class _TerminalFrameState extends State<TerminalFrame> {
                       exit(0);
                     }
                   }
-              },
-            ),
+                },
+              );
+              tabs[mIndex].backend!.exitCode.then((code) {
+                setState(() {
+                  tabs.removeAt(mIndex);
+                  focusNodes.removeAt(mIndex);
+                  index = index - 1;
+                  if (index == -1) {
+                    if (Platform.isAndroid) {
+                      SystemNavigator.pop();
+                    } else {
+                      exit(0);
+                    }
+                  } else {
+                    focusNodes[index].requestFocus();
+                  }
+                });
+              });
+              return tab;
+            },
           ),
           bodies: tabs
               .map((Terminal terminal) => TerminalView(
