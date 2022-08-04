@@ -12,8 +12,8 @@ dependencies:
     sdk: flutter
   xterm:
     git:
-      url: https://github.com/ajay-k07/xterm.dart
-      ref: TerminalTextInputClient-fix
+      url: https://github.com/ajay-k07/xterm-v3
+      ref: master
   flutter_pty: ^0.2.0
   flutter_lints: ^2.0.1
   zenit_ui:
