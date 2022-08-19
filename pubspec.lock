@@ -7,7 +7,7 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.9.0"
+    version: "2.8.2"
   boolean_selector:
     dependency: transitive
     description:
@@ -21,7 +21,7 @@ packages:
       name: characters
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.1"
+    version: "1.2.0"
   charcode:
     dependency: transitive
     description:
@@ -267,7 +267,7 @@ packages:
       name: source_span
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.9.0"
+    version: "1.8.2"
   stack_trace:
     dependency: transitive
     description:
@@ -335,9 +335,9 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: v3
-      resolved-ref: "2c6648bd113bbd9d0d1fe51eab011a06a8e4eb70"
-      url: "https://github.com/TerminalStudio/xterm.dart.git"
+      ref: HEAD
+      resolved-ref: "2e6fba86837d550b527c74770e5f3c0a35272bc8"
+      url: "https://github.com/dahliaOS/xterm.git"
     source: git
     version: "3.0.6-alpha"
   zenit_ui:
