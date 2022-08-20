@@ -14,40 +14,43 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'root-widget.dart';
 
-void main() => runApp(RootTerminalApp());
+import 'package:terminal/root/root_widget.dart';
+
+void main() => runApp(const RootTerminalApp());
 
 class RootTerminalApp extends StatelessWidget {
+  const RootTerminalApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
       title: 'Terminal',
-      theme: new ThemeData(
+      theme: ThemeData(
         brightness: Brightness.dark,
         primarySwatch: Colors.red,
         primaryColor: const Color(0xFF212121),
         canvasColor: const Color(0xFF303030),
       ),
-      home: new RootTerminal(),
+      home: const RootTerminal(),
     );
   }
 }
 
 class RootTerminal extends StatefulWidget {
-  RootTerminal({Key? key}) : super(key: key);
+  const RootTerminal({Key? key}) : super(key: key);
+
   @override
-  RootTerminalState createState() => new RootTerminalState();
+  RootTerminalState createState() => RootTerminalState();
 }
 
 class RootTerminalState extends State<RootTerminal>
     with TickerProviderStateMixin {
   List<Tab> tabs = [];
   late TabController tabController;
-  var count = 1;
+  int count = 1;
+
   void newTab() {
     setState(() {
       tabs.add(
@@ -55,17 +58,17 @@ class RootTerminalState extends State<RootTerminal>
           child: Row(
             children: <Widget>[
               Text('Root Session ' '$count'),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.only(left: 8),
               ),
-              new Expanded(child: new Container()),
+              Expanded(child: Container()),
               GestureDetector(
-                child: Icon(
+                onTap: closeCurrentTab,
+                child: const Icon(
                   Icons.clear,
                   size: 16,
                   //color: Colors.black,
                 ),
-                onTap: closeCurrentTab,
               ),
             ],
           ),
@@ -90,18 +93,18 @@ class RootTerminalState extends State<RootTerminal>
       Tab(
         child: Row(
           children: <Widget>[
-            Text('Root Session ' '0'),
-            Padding(
+            const Text('Root Session ' '0'),
+            const Padding(
               padding: EdgeInsets.only(left: 8),
             ),
-            new Expanded(child: new Container()),
+            Expanded(child: Container()),
             GestureDetector(
-              child: Icon(
+              onTap: closeCurrentTab,
+              child: const Icon(
                 Icons.clear,
                 size: 16,
                 //color: Colors.black,
               ),
-              onTap: closeCurrentTab,
             ),
           ],
         ),
@@ -120,66 +123,76 @@ class RootTerminalState extends State<RootTerminal>
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-          backgroundColor: Color(0xFF212121),
-          appBar: PreferredSize(
-              preferredSize: Size.fromHeight(
-                  55.0), // here the desired height of the status bar
-              child: AppBar(
-                  elevation: 0.0,
-                  backgroundColor: Colors.red[600],
-                  bottom: PreferredSize(
-                      preferredSize: Size.fromHeight(
-                          55.0), // here the desired height of the status bar
-                      child: new Row(
-                        children: [
-                          new Expanded(
-                              child: new Container(
-                            child: TabBar(
-                                controller: tabController,
-                                labelColor: Color(0xFFffffff),
-                                unselectedLabelColor: Colors.white,
-                                indicator: BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(5),
-                                        topRight: Radius.circular(5)),
-                                    color: Color(0xFF212121)),
-                                tabs: tabs.map((tab) => tab).toList()),
-                          )),
-                          new Center(
-                            child: new IconButton(
-                                icon: Icon(Icons.add),
-                                color: Colors.white,
-                                onPressed: newTab),
-                          ),
-                          new Center(
-                            child: new IconButton(
-                                icon: Icon(Icons.play_arrow),
-                                color: Colors.white,
-                                onPressed: newTab),
-                          ),
-                          new Center(
-                            child: new IconButton(
-                                icon: Icon(Icons.more_vert),
-                                color: Colors.white,
-                                onPressed: newTab),
-                          )
-                        ],
-                      )) // A trick to trigger TabBar rebuild.
-                  )),
-          body: Stack(
-            children: [
-              new Center(
-                child: new Text(
-                  "owo whats this",
-                  style: TextStyle(color: Colors.white),
-                ),
+        backgroundColor: const Color(0xFF212121),
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(
+            55.0,
+          ), // here the desired height of the status bar
+          child: AppBar(
+            elevation: 0.0,
+            backgroundColor: Colors.red[600],
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(
+                55.0,
+              ), // here the desired height of the status bar
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TabBar(
+                      controller: tabController,
+                      labelColor: const Color(0xFFffffff),
+                      unselectedLabelColor: Colors.white,
+                      indicator: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(5),
+                          topRight: Radius.circular(5),
+                        ),
+                        color: Color(0xFF212121),
+                      ),
+                      tabs: tabs.map((tab) => tab).toList(),
+                    ),
+                  ),
+                  Center(
+                    child: IconButton(
+                      icon: const Icon(Icons.add),
+                      color: Colors.white,
+                      onPressed: newTab,
+                    ),
+                  ),
+                  Center(
+                    child: IconButton(
+                      icon: const Icon(Icons.play_arrow),
+                      color: Colors.white,
+                      onPressed: newTab,
+                    ),
+                  ),
+                  Center(
+                    child: IconButton(
+                      icon: const Icon(Icons.more_vert),
+                      color: Colors.white,
+                      onPressed: newTab,
+                    ),
+                  )
+                ],
               ),
-              TabBarView(
-                controller: tabController,
-                children: tabs.map((tab) => Terminal()).toList(),
+            ), // A trick to trigger TabBar rebuild.
+          ),
+        ),
+        body: Stack(
+          children: [
+            const Center(
+              child: Text(
+                "owo whats this",
+                style: TextStyle(color: Colors.white),
               ),
-            ],
-          )),
+            ),
+            TabBarView(
+              controller: tabController,
+              children: tabs.map((tab) => const Terminal()).toList(),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

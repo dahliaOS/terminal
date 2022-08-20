@@ -1,10 +1,10 @@
 {
-      "id": "io.dahliaos.terminal",
-      "altName": "terminal",
-      "realName": "Terminal",
-      "version": "dahliaOS-latest",
-      "description": "Access the system shell",
-      "sourceCode": "https://github.com/dahliaOS/terminal",
-      "hash": "DAP_AUTOMATION_PKGHASH",
-      "architecture": "x86_64"
+  "id": "io.dahliaos.terminal",
+  "altName": "terminal",
+  "realName": "Terminal",
+  "version": "dahliaOS-latest",
+  "description": "Access the system shell",
+  "sourceCode": "https://github.com/dahliaOS/terminal",
+  "hash": "DAP_AUTOMATION_PKGHASH",
+  "architecture": "x86_64"
 },
