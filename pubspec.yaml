@@ -10,9 +10,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  xterm: 
-    git: https://github.com/TerminalStudio/xterm.dart.git
-    ref: master
+  xterm:
+    git:
+      url: https://github.com/TerminalStudio/xterm.dart.git
+      ref: master
   flutter_pty: ^0.2.0
   flutter_lints: ^2.0.1
   zenit_ui: 
