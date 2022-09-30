@@ -10,9 +10,9 @@ the dahliaOS project, regardless of affiliation or position.
 
 Simply put, community discussions should be
 
-* respectful and kind;
-* about software;
-* about features and code, not the individuals involved.
+ * respectful and kind;
+ * about software;
+ * about features and code, not the individuals involved.
 
 ## Be respectful and constructive.
 
@@ -34,7 +34,7 @@ encouraged.
 If you are uncomfortable speaking up, or feel that your concerns are not being
 duly considered, you can email the Project Integrity team at integrity@dahliaos.io to request involvement from a moderator. All
 concerns shared with community managers will be kept confidential, but you may
-also submit an anonymous report [here](https://dahlia-os.github.io/anon).
+also submit an anonymous report [here](dahlia-os.github.io/anon).
 Please note that without a way to contact you, an anonymous report may be
 difficult to act on. You may also create a throwaway account to report. In
 cases where a public response is deemed necessary, the identities of victims
@@ -47,31 +47,31 @@ conduct.
 
 ## We will not tolerate harassment of any kind, including but not limited to:
 
-* Harassing comments
-* Intimidation
-* Arguing over subjective preference, e.g. text editors, nationality, religion, etc.
-* Encouraging a person to engage in self-harm.
-* Sustained disruption or derailing of threads, channels, lists, etc.
-* Offensive or violent comments, jokes or otherwise
-* Inappropriate sexual content
-* Unwelcome sexual or otherwise aggressive attention
-* Continued one-on-one communication after requests to cease
-* Distribution or threat of distribution of people's personally identifying
-  information, AKA “doxing”
+ * Harassing comments
+ * Intimidation
+ * Arguing over subjective preference, e.g. text editors, nationality, religion, etc.
+ * Encouraging a person to engage in self-harm.
+ * Sustained disruption or derailing of threads, channels, lists, etc.
+ * Offensive or violent comments, jokes or otherwise
+ * Inappropriate sexual content
+ * Unwelcome sexual or otherwise aggressive attention
+ * Continued one-on-one communication after requests to cease
+ * Distribution or threat of distribution of people's personally identifying
+   information, AKA “doxing”
 
 ## Consequences for failing to comply with this policy
 
 Consequences for failing to comply with this policy may include, at the sole
 discretion of the dahliaOS Project Integrity Team:
 
-* a request for an apology;
-* a private or public warning or reprimand;
-* a temporary ban from the Discord server, blog, dahlia-os repository or
-  organization, or other dahliaOS-supported communication group, including
-  loss of committer status;
-* a permanent ban from any of the above, or from all current and future
-  dahliaOS-supported communities, including loss of
-  committer status.
+ * a request for an apology;
+ * a private or public warning or reprimand;
+ * a temporary ban from the Discord server, blog, dahliaOS repository or
+   organization, or other dahliaOS-supported communication group, including
+   loss of committer status;
+ * a permanent ban from any of the above, or from all current and future
+   dahliaOS-supported communities, including loss of
+   committer status.
 
 Participants warned to stop any harassing behavior are expected to comply
 immediately; failure to do so will result in an escalation of consequences.
