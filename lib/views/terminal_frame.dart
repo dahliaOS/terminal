@@ -1,7 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_pty/flutter_pty.dart';
-import 'package:terminal/constants/constants.dart';
 import 'package:xterm/xterm.dart';
 import 'package:zenit_ui/zenit_ui.dart';
 
@@ -11,12 +11,6 @@ class TerminalFrame extends StatefulWidget {
   @override
   State<TerminalFrame> createState() => _TerminalFrameState();
 }
-
-Pty get _pty => Pty.start(
-      shell,
-      //['-l'],
-      environment: {'TERM': 'xterm-256color'},
-    );
 
 String get shell {
   if (Platform.isWindows) {
@@ -33,13 +27,36 @@ String get shell {
 }
 
 class _TerminalFrameState extends State<TerminalFrame> {
-  final Map<FocusNode, Terminal> tabs = {
-    FocusNode(): Constants.terminal(_pty),
-  };
+  late final Map<FocusNode, Terminal> tabs;
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     tabs.entries.first.key.requestFocus();
+  }
+
+  final terminal = Terminal(
+    maxLines: 10000,
+  );
+
+  final terminalController = TerminalController();
+
+  late final Pty pty;
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.endOfFrame.then(
+      (_) {
+        if (mounted) _startPty();
+      },
+    );
+
+    setState(() {
+      tabs = {
+        FocusNode(): terminal,
+      };
+    });
   }
 
   @override
@@ -60,12 +77,11 @@ class _TerminalFrameState extends State<TerminalFrame> {
             .values
             .toList(),
         onNewPage: () => setState(() {
-          tabs.addEntries([MapEntry(FocusNode(), Constants.terminal(_pty))]);
+          tabs.addEntries([MapEntry(FocusNode(), terminal)]);
         }),
         onPageClosed: (index) {
           tabs.removeWhere((key, value) =>
-              tabs.entries.elementAt(index).key == key &&
-              tabs.entries.elementAt(index).value == value);
+              tabs.entries.elementAt(index).key == key && tabs.entries.elementAt(index).value == value);
           tabs.entries.elementAt(tabs.length - 1).key.requestFocus();
         },
         onPageChanged: (index) {
@@ -73,5 +89,27 @@ class _TerminalFrameState extends State<TerminalFrame> {
         },
       ),
     );
+  }
+
+  void _startPty() {
+    pty = Pty.start(
+      shell,
+      columns: terminal.viewWidth,
+      rows: terminal.viewHeight,
+    );
+
+    pty.output.cast<List<int>>().transform(const Utf8Decoder()).listen(terminal.write);
+
+    pty.exitCode.then((code) {
+      terminal.write('the process exited with exit code $code');
+    });
+
+    terminal.onOutput = (data) {
+      pty.write(const Utf8Encoder().convert(data));
+    };
+
+    terminal.onResize = (w, h, pw, ph) {
+      pty.resize(h, w);
+    };
   }
 }

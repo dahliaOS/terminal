@@ -10,7 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  xterm: ^3.4.0
+  xterm: 
+    git: https://github.com/dahliaOS/xterm.git
   flutter_pty: ^0.3.1
   flutter_lints: ^2.0.1
   zenit_ui: 
