@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter_pty/flutter_pty.dart';
 import 'package:terminal/constants/constants.dart';
-import 'package:xterm/frontend/terminal_view.dart';
 import 'package:xterm/xterm.dart';
 import 'package:zenit_ui/zenit_ui.dart';
 
@@ -54,7 +53,7 @@ class _TerminalFrameState extends State<TerminalFrame> {
                 TabViewPage(
                   title: "Terminal",
                   view: TerminalView(
-                    terminal: terminal,
+                    terminal,
                     focusNode: focusNode,
                   ),
                 )))

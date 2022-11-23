@@ -10,11 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  xterm:
-    git:
-      url: https://github.com/TerminalStudio/xterm.dart.git
-      ref: master
-  flutter_pty: ^0.2.0
+  xterm: ^3.4.0
+  flutter_pty: ^0.3.1
   flutter_lints: ^2.0.1
   zenit_ui: 
     git: https://github.com/dahliaOS/zenit_ui.git
