@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_pty/flutter_pty.dart';
+import 'package:terminal/constants/constants.dart';
 import 'package:xterm/xterm.dart';
 import 'package:zenit_ui/zenit_ui.dart';
 
@@ -28,19 +29,16 @@ String get shell {
 
 class _TerminalFrameState extends State<TerminalFrame> {
   late final Map<FocusNode, Terminal> tabs;
+
+  late final Pty pty;
+
+  final Terminal terminal = Constants.terminal;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     tabs.entries.first.key.requestFocus();
   }
-
-  final terminal = Terminal(
-    maxLines: 10000,
-  );
-
-  final terminalController = TerminalController();
-
-  late final Pty pty;
 
   @override
   void initState() {
@@ -48,7 +46,7 @@ class _TerminalFrameState extends State<TerminalFrame> {
 
     WidgetsBinding.instance.endOfFrame.then(
       (_) {
-        if (mounted) _startPty();
+        if (mounted) _startPty(terminal);
       },
     );
 
@@ -64,52 +62,78 @@ class _TerminalFrameState extends State<TerminalFrame> {
     return Material(
       color: Colors.transparent,
       child: TabView(
-        pages: tabs
-            .map((FocusNode focusNode, Terminal terminal) => MapEntry(
-                focusNode,
-                TabViewPage(
-                  title: "Terminal",
-                  view: TerminalView(
-                    terminal,
-                    focusNode: focusNode,
-                  ),
-                )))
-            .values
-            .toList(),
-        onNewPage: () => setState(() {
-          tabs.addEntries([MapEntry(FocusNode(), terminal)]);
-        }),
+        pages: tabList(),
+        onNewPage: () {
+          newTab();
+        },
         onPageClosed: (index) {
-          tabs.removeWhere((key, value) =>
-              tabs.entries.elementAt(index).key == key && tabs.entries.elementAt(index).value == value);
-          tabs.entries.elementAt(tabs.length - 1).key.requestFocus();
+          closeTab(index);
         },
         onPageChanged: (index) {
-          tabs.entries.elementAt(index).key.requestFocus();
+          changeTab(index);
         },
       ),
     );
   }
 
-  void _startPty() {
-    pty = Pty.start(
+  List<TabViewPage> tabList() {
+    return tabs
+        .map(
+          (FocusNode focusNode, Terminal terminal) => MapEntry(
+            focusNode,
+            TabViewPage(
+              title: "Terminal",
+              view: TerminalView(
+                terminal,
+                focusNode: focusNode,
+              ),
+            ),
+          ),
+        )
+        .values
+        .toList();
+  }
+
+  void changeTab(int index) {
+    tabs.entries.elementAt(index).key.requestFocus();
+  }
+
+  void closeTab(int index) {
+    tabs.removeWhere((key, value) =>
+        tabs.entries.elementAt(index).key == key && tabs.entries.elementAt(index).value == value);
+    tabs.entries.elementAt(tabs.length - 1).key.requestFocus();
+  }
+
+  void newTab() {
+    Terminal t = Terminal(
+      maxLines: 10000,
+    );
+    _startPty(t);
+    setState(() {
+      tabs.addEntries([MapEntry(FocusNode(), t)]);
+    });
+  }
+
+  Pty _startPty(Terminal t) {
+    Pty p = Pty.start(
       shell,
-      columns: terminal.viewWidth,
-      rows: terminal.viewHeight,
+      columns: t.viewWidth,
+      rows: t.viewHeight,
     );
 
-    pty.output.cast<List<int>>().transform(const Utf8Decoder()).listen(terminal.write);
+    p.output.cast<List<int>>().transform(const Utf8Decoder()).listen(t.write);
 
-    pty.exitCode.then((code) {
-      terminal.write('the process exited with exit code $code');
+    p.exitCode.then((code) {
+      t.write('the process exited with exit code $code');
     });
 
-    terminal.onOutput = (data) {
-      pty.write(const Utf8Encoder().convert(data));
+    t.onOutput = (data) {
+      p.write(const Utf8Encoder().convert(data));
     };
 
-    terminal.onResize = (w, h, pw, ph) {
-      pty.resize(h, w);
+    t.onResize = (w, h, pw, ph) {
+      p.resize(h, w);
     };
+    return p;
   }
 }

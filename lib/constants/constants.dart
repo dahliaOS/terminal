@@ -1,9 +1,7 @@
-import 'package:flutter_pty/flutter_pty.dart';
 import 'package:xterm/xterm.dart';
 
 class Constants {
-  static Terminal terminal(Pty pty) => Terminal(
+  static Terminal get terminal => Terminal(
         maxLines: 10000,
-        //backend: TerminalBackendX(pty),
       );
 }
