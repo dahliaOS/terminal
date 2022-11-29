@@ -1,4 +1,6 @@
-![Terminal](https://raw.githubusercontent.com/dahliaOS/website/main/public/images/terminal.webp)
+<p align="center">
+  <img width="80%" src="https://raw.githubusercontent.com/dahliaOS/website/main/public/images/animation/terminal.webp" />
+</p>
 
 <p align="center">
 <a href="https://dahliaos.io">Website</a> •
