@@ -10,7 +10,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import 'package:flutter/material.dart';
 import 'package:terminal/views/terminal_frame.dart';
 import 'package:terminal/views/terminal_settings.dart';
 import 'package:zenit_ui/zenit_ui.dart';
@@ -20,7 +19,7 @@ void main() {
 }
 
 class Terminal extends StatelessWidget {
-  const Terminal({Key? key}) : super(key: key);
+  const Terminal({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +28,8 @@ class Terminal extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Terminal',
       initialRoute: '/',
-      theme: ThemeEngine.zenitDefaultLightTheme,
-      darkTheme: ThemeEngine.zenitDefaultDarkTheme,
+      theme: createZenitTheme(),
+      darkTheme: createZenitTheme(brightness: Brightness.dark),
       themeMode: ThemeMode.dark,
       routes: {
         "/": (context) => const TerminalFrame(),

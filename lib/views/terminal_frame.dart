@@ -1,14 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_pty/flutter_pty.dart';
 import 'package:terminal/constants/constants.dart';
 import 'package:xterm/xterm.dart';
 import 'package:zenit_ui/zenit_ui.dart';
 
 class TerminalFrame extends StatefulWidget {
-  const TerminalFrame({Key? key}) : super(key: key);
+  const TerminalFrame({super.key});
 
   @override
   State<TerminalFrame> createState() => _TerminalFrameState();
@@ -28,17 +27,24 @@ String get shell {
   }
 }
 
-class _TerminalFrameState extends State<TerminalFrame> {
-  late final Map<FocusNode, Terminal> tabs;
+class TerminalPage {
+  final FocusNode focusNode;
+  final Terminal terminal;
 
-  late final Pty pty;
+  const TerminalPage(this.focusNode, this.terminal);
+}
+
+class _TerminalFrameState extends State<TerminalFrame> {
+  late final List<TabData> terminalTabs;
+  late final List<TerminalPage> terminalPages;
+
+  int _selectedIndex = 0;
 
   final Terminal terminal = Constants.terminal;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    tabs.entries.first.key.requestFocus();
   }
 
   @override
@@ -52,57 +58,50 @@ class _TerminalFrameState extends State<TerminalFrame> {
     );
 
     setState(() {
-      tabs = {
-        FocusNode(): terminal,
-      };
+      terminalPages = [
+        TerminalPage(FocusNode(), terminal),
+      ];
+      terminalTabs = [
+        const TabData(
+          leading: Icon(Icons.code),
+          title: "Page 1",
+        ),
+      ];
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
-      child: TabView(
-        pages: tabList(),
-        onNewPage: () {
-          newTab();
-        },
-        onPageClosed: (index) {
-          closeTab(index);
-        },
-        onPageChanged: (index) {
-          changeTab(index);
-        },
+      child: Column(
+        children: [
+          ZenitTabBar(
+            selectedIndex: _selectedIndex,
+            tabs: terminalTabs,
+            onTabSelected: changeTab,
+            onTabClosed: closeTab,
+            onAddTab: newTab,
+          ),
+          Expanded(
+            child: TerminalView(terminalPages.elementAt(_selectedIndex).terminal,
+                focusNode: terminalPages.elementAt(_selectedIndex).focusNode),
+          ),
+        ],
       ),
     );
   }
 
-  List<TabViewPage> tabList() {
-    return tabs
-        .map(
-          (FocusNode focusNode, Terminal terminal) => MapEntry(
-            focusNode,
-            TabViewPage(
-              title: "Terminal",
-              view: TerminalView(
-                terminal,
-                focusNode: focusNode,
-              ),
-            ),
-          ),
-        )
-        .values
-        .toList();
-  }
-
   void changeTab(int index) {
-    tabs.entries.elementAt(index).key.requestFocus();
+    setState(() {
+      _selectedIndex = index;
+    });
+    terminalPages.elementAt(index).focusNode.requestFocus();
   }
 
   void closeTab(int index) {
-    tabs.removeWhere((key, value) =>
-        tabs.entries.elementAt(index).key == key && tabs.entries.elementAt(index).value == value);
-    tabs.entries.elementAt(tabs.length - 1).key.requestFocus();
+    terminalPages.removeAt(index);
+    terminalTabs.removeAt(index);
+    changeTab(index - 1);
   }
 
   void newTab() {
@@ -111,8 +110,13 @@ class _TerminalFrameState extends State<TerminalFrame> {
     );
     _startPty(t);
     setState(() {
-      tabs.addEntries([MapEntry(FocusNode(), t)]);
+      terminalPages.add(TerminalPage(FocusNode(), t));
+      terminalTabs.add(TabData(
+        leading: const Icon(Icons.code),
+        title: "Page ${terminalTabs.length + 1}",
+      ));
     });
+    changeTab(terminalTabs.length - 1);
   }
 
   Pty _startPty(Terminal t) {

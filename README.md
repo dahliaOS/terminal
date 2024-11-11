@@ -16,6 +16,14 @@
 - **Terminal** for dahliaOS
 - **Written** in Dart/Flutter
 
+
+# FIX FOR WAITPID FUNCTION ERROR ON BUILD:
+Add 
+```c
+#include <sys/wait.h>
+```
+to *linux/flutter/ephemeral/.plugin_symlinks/flutter_pty/src/flutter_pty_unix.c*
+
 ## Development
 
 To develop and locally test the application:
