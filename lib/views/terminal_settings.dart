@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TerminalSettings extends StatelessWidget {
-  const TerminalSettings({Key? key}) : super(key: key);
+  const TerminalSettings({super.key});
 
   @override
   Widget build(BuildContext context) {

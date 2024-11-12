@@ -11,15 +11,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import 'package:terminal/views/terminal_frame.dart';
-import 'package:terminal/views/terminal_settings.dart';
 import 'package:zenit_ui/zenit_ui.dart';
 
 void main() {
-  runApp(const Terminal());
+  runApp(const TerminalApp());
 }
 
-class Terminal extends StatelessWidget {
-  const Terminal({super.key});
+class TerminalApp extends StatelessWidget {
+  const TerminalApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +30,7 @@ class Terminal extends StatelessWidget {
       theme: createZenitTheme(),
       darkTheme: createZenitTheme(brightness: Brightness.dark),
       themeMode: ThemeMode.dark,
-      routes: {
-        "/": (context) => const TerminalFrame(),
-        "/settings": (context) => const TerminalSettings(),
-      },
+      home: TerminalFrame(),
     );
   }
 }

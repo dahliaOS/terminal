@@ -1,59 +1,41 @@
-/* import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_pty/flutter_pty.dart';
 import 'package:xterm/xterm.dart';
 
-class TerminalBackendX implements TerminalBackend {
-  final StreamController<String> _outStream = StreamController<String>();
+class TerminalBackend {
+  static String get loginShell => Platform.environment['SHELL'] ?? "sh";
 
-  TerminalBackendX(this.pty);
-
-  Pty pty;
-
-  @override
-  void ackProcessed() {
-    return;
+  Terminal createNewTerminal() {
+    Terminal t = Terminal(
+      maxLines: 10000,
+    );
+    _startPty(t);
+    return t;
   }
 
-  @override
-  Future<int> get exitCode => pty.exitCode;
+  Pty _startPty(Terminal t) {
+    Pty p = Pty.start(
+      loginShell,
+      columns: t.viewWidth,
+      rows: t.viewHeight,
+    );
 
-  @override
-  void init() {
-    pty.output.cast<List<int>>().transform(const Utf8Decoder()).listen((text) {
-      _outStream.sink.add(text);
+    p.output.cast<List<int>>().transform(const Utf8Decoder()).listen(t.write);
+
+    p.exitCode.then((code) {
+      t.write('the process exited with exit code $code');
     });
-  }
 
-  @override
-  Stream<String> get out => _outStream.stream;
+    t.onOutput = (data) {
+      p.write(const Utf8Encoder().convert(data));
+    };
 
-  @override
-  void resize(int width, int height, int pixelWidth, int pixelHeight) {
-    pty.resize(height, width);
-  }
+    t.onResize = (w, h, pw, ph) {
+      p.resize(h, w);
+    };
 
-  @override
-  void terminate() {
-    pty.kill(ProcessSignal.sigterm);
-    _outStream.close();
-  }
-
-  @override
-  void write(String input) {
-    if (input == '\r') {
-      //_outStream.sink.add('\r\n');
-      pty.write(const Utf8Encoder().convert('\r'));
-    } else if (input.codeUnitAt(0) == 127) {
-      // Backspace handling
-      //_outStream.sink.add('\b \b');
-      pty.write(const Utf8Encoder().convert('\b \b'));
-    } else {
-      //_outStream.sink.add(input);
-      pty.write(const Utf8Encoder().convert(input));
-    }
+    return p;
   }
 }
- */
